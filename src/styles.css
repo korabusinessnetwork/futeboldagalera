@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Paleta original PMNH, secao 11 da spec. Trocada por tenant em applyTheme. */
+  --bg: #0a0d0a;
+  --card: #12180f;
+  --card2: #18220f;
+  --line: #26331b;
+  --text: #e8f3ea;
+  --muted: #93b29b;
+  --accent: #22c55e;
+  --accent2: #16a34a;
+  color-scheme: dark;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+@layer components {
+  .card { @apply rounded-2xl border border-line bg-card; }
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-xl border border-line
+           bg-card2 px-3 py-2 text-sm font-semibold text-ink transition
+           active:scale-[.98] disabled:opacity-40 disabled:active:scale-100;
+  }
+  .btn-primary { @apply border-transparent bg-accent text-black hover:bg-accent2; }
+  .btn-danger { @apply border-danger/40 text-danger; }
+  .input {
+    @apply w-full rounded-xl border border-line bg-card2 px-3 py-2 text-sm text-ink
+           outline-none placeholder:text-muted focus:border-accent;
+  }
+  .chip { @apply rounded-full border border-line bg-card2 px-2.5 py-1 text-xs font-medium text-muted; }
+  .label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-muted; }
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+.safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4.75rem); }
+
+.nav-scroll::-webkit-scrollbar { display: none; }
+.nav-scroll { scrollbar-width: none; }

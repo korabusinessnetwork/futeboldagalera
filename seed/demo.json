@@ -1,0 +1,1761 @@
+{
+  "players": [
+    {
+      "id": "ms68vpzrkyl5x",
+      "name": "Anderson Schenkel",
+      "pos": "MC"
+    },
+    {
+      "id": "ms6ihl0huo954",
+      "name": "Doleski",
+      "pos": "ZAG"
+    },
+    {
+      "id": "ms6ii166pwz2d",
+      "name": "Marcelo",
+      "pos": "GOL"
+    },
+    {
+      "id": "ms6iiazgw0h7a",
+      "name": "Maurício",
+      "pos": "GOL"
+    },
+    {
+      "id": "ms6ij3hvaku58",
+      "name": "Rafa Schimitz",
+      "pos": "ZAG"
+    },
+    {
+      "id": "ms6ijev2j7alu",
+      "name": "Léo Rodrigues",
+      "pos": "MC"
+    },
+    {
+      "id": "ms6ijsu3hcswk",
+      "name": "Henrique",
+      "pos": "MC"
+    },
+    {
+      "id": "ms6ik4315jo4g",
+      "name": "Jonathan Coringa",
+      "pos": "ATA"
+    },
+    {
+      "id": "ms6ikfbl1iwie",
+      "name": "Mumu",
+      "pos": "ZAG"
+    },
+    {
+      "id": "ms6ikn6k2rw5k",
+      "name": "Serena",
+      "pos": "ZAG"
+    },
+    {
+      "id": "ms6ikx0h9qcek",
+      "name": "Pavoni",
+      "pos": "ZAG"
+    },
+    {
+      "id": "ms6ilkcgwbuzx",
+      "name": "Felipe B",
+      "pos": "ATA"
+    },
+    {
+      "id": "ms6ilwdrhrow5",
+      "name": "João fumaça",
+      "pos": "MC"
+    },
+    {
+      "id": "ms6im6zp48kgh",
+      "name": "André Botega",
+      "pos": "MC"
+    },
+    {
+      "id": "ms6imm9lw0gqj",
+      "name": "Zé Arneck",
+      "pos": "MC"
+    },
+    {
+      "id": "ms6imuf9ls41o",
+      "name": "Ricardo Irigoem",
+      "pos": "ATA"
+    },
+    {
+      "id": "ms6in5efuz6xu",
+      "name": "Guilherme Sanabria",
+      "pos": "MC"
+    },
+    {
+      "id": "ms6inecevcuym",
+      "name": "Dennis",
+      "pos": "MC"
+    },
+    {
+      "id": "msg981qprkyst",
+      "name": "João Ermel",
+      "pos": "ATA"
+    },
+    {
+      "id": "msg99zfulvawa",
+      "name": "Ivan",
+      "pos": "ZAG"
+    },
+    {
+      "id": "msg9bbo34tvkm",
+      "name": "Juliano Carreta",
+      "pos": "ATA"
+    },
+    {
+      "id": "msg9d8zduqjhg",
+      "name": "KBLO",
+      "pos": "MC"
+    },
+    {
+      "id": "msg9lvy0yleax",
+      "name": "Rodrigo cunhado carreta",
+      "pos": "ZAG"
+    },
+    {
+      "id": "msg9m58z3wlga",
+      "name": "Emerson",
+      "pos": "ZAG"
+    },
+    {
+      "id": "msg9otmyoxy5p",
+      "name": "Márcio Serena",
+      "pos": "GOL"
+    },
+    {
+      "id": "msq2gtxevvi3y",
+      "name": "Zé Renato",
+      "pos": "ZAG"
+    },
+    {
+      "id": "msq2hog1ov2av",
+      "name": "Cleber",
+      "pos": "MC"
+    },
+    {
+      "id": "msq2i3ufrd7vc",
+      "name": "Leandro",
+      "pos": "MC"
+    },
+    {
+      "id": "msq2j98gy2dlu",
+      "name": "Eduardo Bento",
+      "pos": "ZAG"
+    },
+    {
+      "id": "msq2ny3f4jci0",
+      "name": "Rodrigo Marques",
+      "pos": "ZAG"
+    },
+    {
+      "id": "msq2ok0a4kw8p",
+      "name": "Gabriel",
+      "pos": "GOL"
+    },
+    {
+      "id": "mt09xlkxtazgq",
+      "name": "Feijão",
+      "pos": "MC"
+    },
+    {
+      "id": "mt0a2l40qs2f4",
+      "name": "Daniel Braun",
+      "pos": "ZAG"
+    },
+    {
+      "id": "mtag7qf71ijvx",
+      "name": "Vinícius",
+      "pos": "GOL"
+    },
+    {
+      "id": "mtag7ytyiee30",
+      "name": "Nicollas",
+      "pos": "MC"
+    },
+    {
+      "id": "mtag9bgei09p0",
+      "name": "Campos",
+      "pos": "MC"
+    }
+  ],
+  "matches": [
+    {
+      "id": "ms6itfhof9y8f",
+      "date": "2026-07-29",
+      "entries": [
+        {
+          "playerId": "ms68vpzrkyl5x",
+          "result": "v",
+          "goals": 2,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ihl0huo954",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ii166pwz2d",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6iiazgw0h7a",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ij3hvaku58",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ijev2j7alu",
+          "result": "v",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ijsu3hcswk",
+          "result": "v",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ik4315jo4g",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ikfbl1iwie",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ikn6k2rw5k",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ikx0h9qcek",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ilkcgwbuzx",
+          "result": "v",
+          "goals": 2,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ilwdrhrow5",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6im6zp48kgh",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6imm9lw0gqj",
+          "result": "v",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6imuf9ls41o",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6in5efuz6xu",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6inecevcuym",
+          "result": "v",
+          "goals": 1,
+          "team": "branco"
+        }
+      ],
+      "scoreBranco": 8,
+      "scorePreto": 5,
+      "escalaPub": true,
+      "lineup": {
+        "teams": {
+          "branco": {
+            "line": [
+              {
+                "id": "ms6ihl0huo954",
+                "name": "Doleski",
+                "pos": "ZAG",
+                "rating": 50,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 51.42975114770552
+              },
+              {
+                "id": "ms6ikn6k2rw5k",
+                "name": "Serena",
+                "pos": "ZAG",
+                "rating": 50,
+                "avulso": false,
+                "oop": false,
+                "slot": "ZAG",
+                "j": 47.68076583322585
+              },
+              {
+                "id": "ms68vpzrkyl5x",
+                "name": "Anderson Schenkel",
+                "pos": "VOL",
+                "rating": 50,
+                "avulso": false,
+                "slot": "VOL",
+                "j": 52.26248534987465
+              },
+              {
+                "id": "ms6inecevcuym",
+                "name": "Dennis",
+                "pos": "MC",
+                "rating": 50,
+                "avulso": false,
+                "slot": "MC",
+                "j": 51.239085617314394
+              },
+              {
+                "id": "ms6ijsu3hcswk",
+                "name": "Henrique",
+                "pos": "MC",
+                "rating": 50,
+                "avulso": false,
+                "slot": "MC",
+                "j": 49.957890003832965
+              },
+              {
+                "id": "ms6ilkcgwbuzx",
+                "name": "Felipe",
+                "pos": "ATA",
+                "rating": 50,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 50.46060872517724,
+                "oop": false
+              }
+            ],
+            "gk": {
+              "id": "ms6ii166pwz2d",
+              "name": "Marcelo",
+              "pos": "GOL",
+              "rating": 50,
+              "avulso": false
+            },
+            "total": 400,
+            "res": [
+              {
+                "id": "ms6ijev2j7alu",
+                "name": "Léo Rodrigues",
+                "pos": "MC",
+                "rating": 50,
+                "avulso": false,
+                "slot": "MC",
+                "oop": false
+              },
+              {
+                "id": "ms6imm9lw0gqj",
+                "name": "Zé",
+                "pos": "MC",
+                "rating": 50,
+                "avulso": false
+              }
+            ]
+          },
+          "preto": {
+            "line": [
+              {
+                "id": "ms6ikfbl1iwie",
+                "name": "Mumu",
+                "pos": "ZAG",
+                "rating": 50,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 50.91426377141125
+              },
+              {
+                "id": "ms6ikx0h9qcek",
+                "name": "Pavoni",
+                "pos": "ZAG",
+                "rating": 50,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 48.89953802057824
+              },
+              {
+                "id": "ms6ij3hvaku58",
+                "name": "Rafa Schimitz",
+                "pos": "ZAG",
+                "rating": 50,
+                "avulso": false,
+                "slot": "VOL",
+                "j": 50.247243862549645,
+                "oop": true
+              },
+              {
+                "id": "ms6im6zp48kgh",
+                "name": "André",
+                "pos": "MC",
+                "rating": 50,
+                "avulso": false,
+                "slot": "MC",
+                "j": 50.17339627111154
+              },
+              {
+                "id": "ms6in5efuz6xu",
+                "name": "Guilherme Sanabria",
+                "pos": "MC",
+                "rating": 50,
+                "avulso": false,
+                "slot": "MC",
+                "j": 47.69184163873698
+              },
+              {
+                "id": "ms6ik4315jo4g",
+                "name": "Jonathan Coringa",
+                "pos": "ATA",
+                "rating": 50,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 51.002830818947935,
+                "oop": false
+              }
+            ],
+            "gk": {
+              "id": "ms6iiazgw0h7a",
+              "name": "Maurício",
+              "pos": "GOL",
+              "rating": 50,
+              "avulso": false
+            },
+            "total": 400,
+            "res": [
+              {
+                "id": "ms6ilwdrhrow5",
+                "name": "João",
+                "pos": "MC",
+                "rating": 50,
+                "avulso": false,
+                "slot": "MC",
+                "oop": false
+              },
+              {
+                "id": "ms6imuf9ls41o",
+                "name": "Ricardo",
+                "pos": "ATA",
+                "rating": 50,
+                "avulso": false
+              }
+            ]
+          }
+        },
+        "formB": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        },
+        "formP": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        }
+      },
+      "votes": {
+        "ms68vpzrkyl5x": 3,
+        "ms6ijev2j7alu": 1,
+        "ms6ilkcgwbuzx": 3,
+        "ms6ii166pwz2d": 3,
+        "ms6inecevcuym": 1,
+        "ms6ikfbl1iwie": 1,
+        "ms6imuf9ls41o": 1
+      },
+      "craque": "ms6ilkcgwbuzx"
+    },
+    {
+      "id": "msgo8ig749skp",
+      "date": "2026-08-05",
+      "entries": [
+        {
+          "playerId": "ms68vpzrkyl5x",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ihl0huo954",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6iiazgw0h7a",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ij3hvaku58",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ijev2j7alu",
+          "result": "v",
+          "goals": 0,
+          "og": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ijsu3hcswk",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ikfbl1iwie",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ikx0h9qcek",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ilkcgwbuzx",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6imm9lw0gqj",
+          "result": "d",
+          "goals": 0,
+          "og": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6inecevcuym",
+          "result": "v",
+          "goals": 3,
+          "team": "branco"
+        },
+        {
+          "playerId": "msg981qprkyst",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg99zfulvawa",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg9bbo34tvkm",
+          "result": "v",
+          "goals": 2,
+          "team": "branco"
+        },
+        {
+          "playerId": "msg9d8zduqjhg",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg9lvy0yleax",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "msg9m58z3wlga",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg9otmyoxy5p",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        }
+      ],
+      "scoreBranco": 6,
+      "scorePreto": 4,
+      "escalaPub": true,
+      "lineup": {
+        "teams": {
+          "branco": {
+            "line": [
+              {
+                "id": "ms6ikfbl1iwie",
+                "name": "Mumu",
+                "pos": "ZAG",
+                "rating": 30,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 31.99214434161416,
+                "oop": false
+              },
+              {
+                "id": "ms6ikx0h9qcek",
+                "name": "Pavoni",
+                "pos": "ZAG",
+                "rating": 30,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 28.77256030690476
+              },
+              {
+                "id": "ms68vpzrkyl5x",
+                "name": "Anderson Schenkel",
+                "pos": "VOL",
+                "rating": 100,
+                "avulso": false,
+                "slot": "VOL",
+                "j": 102.2517230026939,
+                "oop": false
+              },
+              {
+                "id": "ms6inecevcuym",
+                "name": "Dennis",
+                "pos": "MC",
+                "rating": 100,
+                "avulso": false,
+                "slot": "MC",
+                "j": 102.25506812983124,
+                "oop": false
+              },
+              {
+                "id": "ms6ijev2j7alu",
+                "name": "Léo Rodrigues",
+                "pos": "MC",
+                "rating": 100,
+                "avulso": false,
+                "slot": "MC",
+                "j": 100.21347290857912
+              },
+              {
+                "id": "msg9bbo34tvkm",
+                "name": "Juliano Carreta",
+                "pos": "ATA",
+                "rating": 59.166666666666664,
+                "avulso": false,
+                "slot": "ATA",
+                "oop": false
+              }
+            ],
+            "gk": {
+              "id": "msg9otmyoxy5p",
+              "name": "Márcio Serena",
+              "pos": "GOL",
+              "rating": 59.166666666666664,
+              "avulso": false
+            },
+            "total": 508.33333333333337,
+            "res": [
+              {
+                "id": "ms6ij3hvaku58",
+                "name": "Rafa Schimitz",
+                "pos": "ZAG",
+                "rating": 30,
+                "avulso": false
+              },
+              {
+                "id": "msg9lvy0yleax",
+                "name": "Rodrigo cunhado carreta",
+                "pos": "ZAG",
+                "rating": 59.166666666666664,
+                "avulso": false,
+                "slot": "ZAG",
+                "oop": false
+              }
+            ]
+          },
+          "preto": {
+            "line": [
+              {
+                "id": "msg99zfulvawa",
+                "name": "Ivan",
+                "pos": "ZAG",
+                "rating": 59.166666666666664,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 59.11213264404066
+              },
+              {
+                "id": "ms6ihl0huo954",
+                "name": "Doleski",
+                "pos": "ZAG",
+                "rating": 85,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 87.01564412561753,
+                "oop": false
+              },
+              {
+                "id": "msg9d8zduqjhg",
+                "name": "KBLO",
+                "pos": "VOL",
+                "rating": 59.166666666666664,
+                "avulso": false,
+                "slot": "VOL",
+                "j": 60.263546654541884,
+                "oop": false
+              },
+              {
+                "id": "ms6ijsu3hcswk",
+                "name": "Henrique",
+                "pos": "MC",
+                "rating": 100,
+                "avulso": false,
+                "slot": "MC",
+                "j": 102.43608267831742,
+                "oop": false
+              },
+              {
+                "id": "ms6imm9lw0gqj",
+                "name": "Zé Arneck",
+                "pos": "MC",
+                "rating": 100,
+                "avulso": false,
+                "slot": "MC",
+                "j": 97.911678952379
+              },
+              {
+                "id": "msg981qprkyst",
+                "name": "João Ermel",
+                "pos": "ATA",
+                "rating": 59.166666666666664,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 56.92612772831362
+              }
+            ],
+            "gk": {
+              "id": "ms6iiazgw0h7a",
+              "name": "Maurício",
+              "pos": "GOL",
+              "rating": 15,
+              "avulso": false
+            },
+            "total": 621.6666666666666,
+            "res": [
+              {
+                "id": "msg9m58z3wlga",
+                "name": "Emerson",
+                "pos": "ZAG",
+                "rating": 59.166666666666664,
+                "avulso": false,
+                "slot": "ZAG",
+                "oop": false
+              },
+              {
+                "id": "ms6ilkcgwbuzx",
+                "name": "Felipe B",
+                "pos": "ATA",
+                "rating": 100,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 99.65193122208699,
+                "oop": false
+              }
+            ]
+          }
+        },
+        "formB": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        },
+        "formP": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        }
+      },
+      "voteOpen": true,
+      "votes": {
+        "ms6inecevcuym": 10,
+        "msg9bbo34tvkm": 3
+      },
+      "voteClosed": true
+    },
+    {
+      "id": "msql1r4z74fgx",
+      "date": "2026-08-12",
+      "entries": [
+        {
+          "playerId": "ms68vpzrkyl5x",
+          "result": "d",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ihl0huo954",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6iiazgw0h7a",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ij3hvaku58",
+          "result": "d",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ijev2j7alu",
+          "result": "v",
+          "goals": 3,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ijsu3hcswk",
+          "result": "v",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ikx0h9qcek",
+          "result": "v",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ilkcgwbuzx",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ilwdrhrow5",
+          "result": "d",
+          "goals": 2,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6imuf9ls41o",
+          "result": "v",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg99zfulvawa",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg9bbo34tvkm",
+          "result": "d",
+          "goals": 2,
+          "team": "branco"
+        },
+        {
+          "playerId": "msq2gtxevvi3y",
+          "result": "d",
+          "goals": 0,
+          "og": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "msq2hog1ov2av",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "msq2i3ufrd7vc",
+          "result": "d",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "msq2j98gy2dlu",
+          "result": "d",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "msq2ny3f4jci0",
+          "result": "d",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "msq2ok0a4kw8p",
+          "result": "d",
+          "goals": 0,
+          "team": "branco"
+        }
+      ],
+      "scoreBranco": 6,
+      "scorePreto": 7,
+      "escalaPub": true,
+      "lineup": {
+        "teams": {
+          "branco": {
+            "line": [
+              {
+                "id": "ms6ij3hvaku58",
+                "name": "Rafa Schimitz",
+                "pos": "ZAG",
+                "rating": 57.5,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 58.93718271490777
+              },
+              {
+                "id": "msq2gtxevvi3y",
+                "name": "Zé Renato",
+                "pos": "ZAG",
+                "rating": 53.8,
+                "avulso": false,
+                "slot": "ZAG",
+                "oop": false
+              },
+              {
+                "id": "ms6ilwdrhrow5",
+                "name": "João fumaça",
+                "pos": "MC",
+                "rating": 15,
+                "avulso": false,
+                "slot": "VOL",
+                "j": 13.779460221150234,
+                "oop": true
+              },
+              {
+                "id": "msq2i3ufrd7vc",
+                "name": "Leandro",
+                "pos": "MC",
+                "rating": 53.8,
+                "avulso": false,
+                "slot": "MC",
+                "j": 52.00418033970575
+              },
+              {
+                "id": "ms68vpzrkyl5x",
+                "name": "Anderson Schenkel",
+                "pos": "MC",
+                "rating": 100,
+                "avulso": false,
+                "slot": "MC",
+                "j": 98.37495248691525,
+                "oop": false
+              },
+              {
+                "id": "msg9bbo34tvkm",
+                "name": "Juliano Carreta",
+                "pos": "ATA",
+                "rating": 100,
+                "avulso": false,
+                "slot": "ATA",
+                "oop": false
+              }
+            ],
+            "gk": {
+              "id": "msq2ok0a4kw8p",
+              "name": "Gabriel",
+              "pos": "GOL",
+              "rating": 53.8,
+              "avulso": false
+            },
+            "total": 487.70000000000005,
+            "res": [
+              {
+                "id": "msq2j98gy2dlu",
+                "name": "Eduardo Bento",
+                "pos": "ZAG",
+                "rating": 53.8,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 53.27726882617858,
+                "oop": false
+              },
+              {
+                "id": "msq2ny3f4jci0",
+                "name": "Rodrigo Marques",
+                "pos": "ZAG",
+                "rating": 53.8,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 51.76470994377765,
+                "oop": true
+              }
+            ]
+          },
+          "preto": {
+            "line": [
+              {
+                "id": "ms6ikx0h9qcek",
+                "name": "Pavoni",
+                "pos": "ZAG",
+                "rating": 57.5,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 55.7956133698722,
+                "oop": false
+              },
+              {
+                "id": "ms6ihl0huo954",
+                "name": "Doleski",
+                "pos": "ZAG",
+                "rating": 50,
+                "avulso": false,
+                "oop": false,
+                "slot": "ZAG",
+                "j": 49.241348211922485
+              },
+              {
+                "id": "msg99zfulvawa",
+                "name": "Ivan",
+                "pos": "ZAG",
+                "rating": 15,
+                "avulso": false,
+                "oop": "VOL",
+                "slot": "VOL",
+                "j": 12.65730987227426
+              },
+              {
+                "id": "msq2hog1ov2av",
+                "name": "Cleber",
+                "pos": "MC",
+                "rating": 53.8,
+                "avulso": false,
+                "slot": "MC",
+                "j": 51.312915194761615,
+                "oop": false
+              },
+              {
+                "id": "ms6imuf9ls41o",
+                "name": "Ricardo Irigoem",
+                "pos": "ATA",
+                "rating": 30,
+                "avulso": false,
+                "slot": "MC",
+                "j": 28.269195475157268,
+                "oop": true
+              },
+              {
+                "id": "ms6ilkcgwbuzx",
+                "name": "Felipe B",
+                "pos": "ATA",
+                "rating": 65,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 65.24419402759818
+              }
+            ],
+            "gk": {
+              "id": "ms6iiazgw0h7a",
+              "name": "Maurício",
+              "pos": "GOL",
+              "rating": 15,
+              "avulso": false
+            },
+            "total": 421.3,
+            "res": [
+              {
+                "id": "ms6ijev2j7alu",
+                "name": "Léo Rodrigues",
+                "pos": "MC",
+                "rating": 92.5,
+                "avulso": false
+              },
+              {
+                "id": "ms6ijsu3hcswk",
+                "name": "Henrique",
+                "pos": "MC",
+                "rating": 57.5,
+                "avulso": false
+              }
+            ]
+          }
+        },
+        "formB": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        },
+        "formP": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        }
+      },
+      "voteOpen": true,
+      "votes": {
+        "ms6iiazgw0h7a": 12,
+        "ms6ijev2j7alu": 4,
+        "msq2ny3f4jci0": 1,
+        "ms6ilwdrhrow5": 2
+      },
+      "voteClosed": true
+    },
+    {
+      "id": "mt0aazewp1tpt",
+      "date": "2026-08-19",
+      "entries": [
+        {
+          "playerId": "ms68vpzrkyl5x",
+          "result": "v",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ihl0huo954",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6iiazgw0h7a",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ij3hvaku58",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ijev2j7alu",
+          "result": "d",
+          "goals": 2,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ijsu3hcswk",
+          "result": "d",
+          "goals": 3,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ik4315jo4g",
+          "result": "v",
+          "goals": 2,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ikfbl1iwie",
+          "result": "d",
+          "goals": 3,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ikx0h9qcek",
+          "result": "v",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ilkcgwbuzx",
+          "result": "v",
+          "goals": 3,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6imm9lw0gqj",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6imuf9ls41o",
+          "result": "v",
+          "goals": 4,
+          "team": "branco"
+        },
+        {
+          "playerId": "msg99zfulvawa",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg9bbo34tvkm",
+          "result": "d",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg9otmyoxy5p",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "msq2j98gy2dlu",
+          "result": "d",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "mt09xlkxtazgq",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "mt0a2l40qs2f4",
+          "result": "v",
+          "goals": 0,
+          "team": "branco"
+        }
+      ],
+      "scoreBranco": 11,
+      "scorePreto": 9,
+      "escalaPub": true,
+      "lineup": {
+        "teams": {
+          "branco": {
+            "line": [
+              {
+                "id": "ms6ikx0h9qcek",
+                "name": "Pavoni",
+                "pos": "ZAG",
+                "rating": 71.66666666666666,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 70.26467319362834
+              },
+              {
+                "id": "mt0a2l40qs2f4",
+                "name": "Daniel Braun",
+                "pos": "ZAG",
+                "rating": 52.096774193548384,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 52.9092311357583
+              },
+              {
+                "id": "ms6ij3hvaku58",
+                "name": "Rafa Schimitz",
+                "pos": "ZAG",
+                "rating": 43.33333333333333,
+                "avulso": false,
+                "oop": "VOL",
+                "slot": "VOL",
+                "j": 41.94747658074878
+              },
+              {
+                "id": "ms68vpzrkyl5x",
+                "name": "Anderson Schenkel",
+                "pos": "MC",
+                "rating": 76.66666666666666,
+                "avulso": false,
+                "slot": "MC",
+                "j": 74.56424444516708
+              },
+              {
+                "id": "mt09xlkxtazgq",
+                "name": "Feijão",
+                "pos": "MC",
+                "rating": 52.096774193548384,
+                "avulso": false,
+                "slot": "MC",
+                "j": 53.58287772689792
+              },
+              {
+                "id": "ms6imuf9ls41o",
+                "name": "Ricardo Irigoem",
+                "pos": "ATA",
+                "rating": 65,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 65.95476714728251
+              }
+            ],
+            "gk": {
+              "id": "msg9otmyoxy5p",
+              "name": "Márcio Serena",
+              "pos": "GOL",
+              "rating": 85,
+              "avulso": false
+            },
+            "total": 452.5268817204301,
+            "res": [
+              {
+                "id": "ms6ik4315jo4g",
+                "name": "Jonathan Coringa",
+                "pos": "ATA",
+                "rating": 15,
+                "avulso": false
+              },
+              {
+                "id": "ms6ilkcgwbuzx",
+                "name": "Felipe B",
+                "pos": "ATA",
+                "rating": 76.66666666666666,
+                "avulso": false
+              }
+            ]
+          },
+          "preto": {
+            "line": [
+              {
+                "id": "ms6ihl0huo954",
+                "name": "Doleski",
+                "pos": "ZAG",
+                "rating": 61.666666666666664,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 60.86970582681822
+              },
+              {
+                "id": "ms6ikfbl1iwie",
+                "name": "Mumu",
+                "pos": "ZAG",
+                "rating": 57.5,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 56.770407974444346
+              },
+              {
+                "id": "msg99zfulvawa",
+                "name": "Ivan",
+                "pos": "ZAG",
+                "rating": 50,
+                "avulso": false,
+                "oop": "VOL",
+                "slot": "VOL",
+                "j": 49.741282570331094
+              },
+              {
+                "id": "ms6ijsu3hcswk",
+                "name": "Henrique",
+                "pos": "MC",
+                "rating": 71.66666666666666,
+                "avulso": false,
+                "slot": "MC",
+                "j": 71.86697056079494
+              },
+              {
+                "id": "ms6imm9lw0gqj",
+                "name": "Zé Arneck",
+                "pos": "MC",
+                "rating": 57.5,
+                "avulso": false,
+                "slot": "MC",
+                "j": 58.31615998875681
+              },
+              {
+                "id": "msg9bbo34tvkm",
+                "name": "Juliano Carreta",
+                "pos": "ATA",
+                "rating": 65,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 64.92779218019369
+              }
+            ],
+            "gk": {
+              "id": "ms6iiazgw0h7a",
+              "name": "Maurício",
+              "pos": "GOL",
+              "rating": 38.33333333333333,
+              "avulso": false
+            },
+            "total": 478.3333333333333,
+            "res": [
+              {
+                "id": "ms6ijev2j7alu",
+                "name": "Léo Rodrigues",
+                "pos": "MC",
+                "rating": 100,
+                "avulso": false
+              },
+              {
+                "id": "msq2j98gy2dlu",
+                "name": "Eduardo Bento",
+                "pos": "ZAG",
+                "rating": 15,
+                "avulso": false
+              }
+            ]
+          }
+        },
+        "formB": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        },
+        "formP": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        }
+      },
+      "voteOpen": true,
+      "votes": {
+        "ms6imuf9ls41o": 5,
+        "ms6ikfbl1iwie": 2,
+        "ms6ijev2j7alu": 1,
+        "mt09xlkxtazgq": 1,
+        "ms6ij3hvaku58": 1,
+        "ms6ilkcgwbuzx": 1,
+        "ms6ik4315jo4g": 1
+      },
+      "voteClosed": true
+    },
+    {
+      "id": "mtahulhw8od6m",
+      "date": "2026-08-26",
+      "entries": [
+        {
+          "playerId": "ms68vpzrkyl5x",
+          "result": "d",
+          "goals": 1,
+          "og": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ihl0huo954",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6iiazgw0h7a",
+          "result": "d",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ij3hvaku58",
+          "result": "v",
+          "goals": 2,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ikfbl1iwie",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ikn6k2rw5k",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ikx0h9qcek",
+          "result": "d",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "ms6ilkcgwbuzx",
+          "result": "v",
+          "goals": 2,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6ilwdrhrow5",
+          "result": "v",
+          "goals": 1,
+          "team": "preto"
+        },
+        {
+          "playerId": "ms6imuf9ls41o",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "msg981qprkyst",
+          "result": "d",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "msg99zfulvawa",
+          "result": "d",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "msg9bbo34tvkm",
+          "result": "d",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "msg9d8zduqjhg",
+          "result": "d",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "msq2ny3f4jci0",
+          "result": "d",
+          "goals": 1,
+          "team": "branco"
+        },
+        {
+          "playerId": "mtag7qf71ijvx",
+          "result": "v",
+          "goals": 0,
+          "team": "preto"
+        },
+        {
+          "playerId": "mtag7ytyiee30",
+          "result": "d",
+          "goals": 0,
+          "team": "branco"
+        },
+        {
+          "playerId": "mtag9bgei09p0",
+          "result": "v",
+          "goals": 1,
+          "team": "preto"
+        }
+      ],
+      "scoreBranco": 5,
+      "scorePreto": 7,
+      "escalaPub": true,
+      "lineup": {
+        "teams": {
+          "branco": {
+            "line": [
+              {
+                "id": "ms6ikx0h9qcek",
+                "name": "Pavoni",
+                "pos": "ZAG",
+                "rating": 78.75,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 79.92055478784116
+              },
+              {
+                "id": "msq2ny3f4jci0",
+                "name": "Rodrigo Marques",
+                "pos": "ZAG",
+                "rating": 30,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 29.975005688616616
+              },
+              {
+                "id": "msg981qprkyst",
+                "name": "João Ermel",
+                "pos": "ATA",
+                "rating": 30,
+                "avulso": false,
+                "oop": "VOL",
+                "slot": "VOL",
+                "j": 28.556427759458963
+              },
+              {
+                "id": "ms68vpzrkyl5x",
+                "name": "Anderson Schenkel",
+                "pos": "MC",
+                "rating": 82.5,
+                "avulso": false,
+                "slot": "MC",
+                "j": 80.27648069042446
+              },
+              {
+                "id": "msg9d8zduqjhg",
+                "name": "KBLO",
+                "pos": "MC",
+                "rating": 15,
+                "avulso": false,
+                "slot": "MC",
+                "j": 16.703140553726044
+              },
+              {
+                "id": "msg9bbo34tvkm",
+                "name": "Juliano Carreta",
+                "pos": "ATA",
+                "rating": 53.33333333333333,
+                "avulso": false,
+                "oop": false,
+                "slot": "ATA",
+                "j": 51.806243433297425
+              }
+            ],
+            "gk": {
+              "id": "ms6iiazgw0h7a",
+              "name": "Maurício",
+              "pos": "GOL",
+              "rating": 32.5,
+              "avulso": false,
+              "slot": "GOL",
+              "oop": false
+            },
+            "total": 382.4621212121212,
+            "res": [
+              {
+                "id": "msg99zfulvawa",
+                "name": "Ivan",
+                "pos": "ZAG",
+                "rating": 38.33333333333333,
+                "avulso": false
+              },
+              {
+                "id": "mtag7ytyiee30",
+                "name": "Nicollas",
+                "pos": "MC",
+                "rating": 54.54545454545455,
+                "avulso": false
+              }
+            ]
+          },
+          "preto": {
+            "line": [
+              {
+                "id": "ms6ij3hvaku58",
+                "name": "Rafa Schimitz",
+                "pos": "ZAG",
+                "rating": 53.75,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 55.30113449329449
+              },
+              {
+                "id": "ms6ikfbl1iwie",
+                "name": "Mumu",
+                "pos": "ZAG",
+                "rating": 53.33333333333333,
+                "avulso": false,
+                "slot": "ZAG",
+                "j": 51.57933208999295
+              },
+              {
+                "id": "ms6ilkcgwbuzx",
+                "name": "Felipe B",
+                "pos": "ATA",
+                "rating": 82.5,
+                "avulso": false,
+                "slot": "VOL",
+                "j": 80.27128002918326,
+                "oop": true
+              },
+              {
+                "id": "mtag9bgei09p0",
+                "name": "Campos",
+                "pos": "MC",
+                "rating": 54.54545454545455,
+                "avulso": false,
+                "slot": "MC",
+                "j": 54.864231773499085
+              },
+              {
+                "id": "ms6ilwdrhrow5",
+                "name": "João fumaça",
+                "pos": "MC",
+                "rating": 30,
+                "avulso": false,
+                "slot": "MC",
+                "j": 28.175074137405296
+              },
+              {
+                "id": "ms6imuf9ls41o",
+                "name": "Ricardo Irigoem",
+                "pos": "ATA",
+                "rating": 76.66666666666666,
+                "avulso": false,
+                "slot": "ATA",
+                "j": 78.7187102512072
+              }
+            ],
+            "gk": {
+              "id": "mtag7qf71ijvx",
+              "name": "Vinícius",
+              "pos": "GOL",
+              "rating": 54.54545454545455,
+              "avulso": false,
+              "slot": "GOL",
+              "oop": false
+            },
+            "total": 485.7954545454545,
+            "res": [
+              {
+                "id": "ms6ihl0huo954",
+                "name": "Doleski",
+                "pos": "ZAG",
+                "rating": 50,
+                "avulso": false
+              },
+              {
+                "id": "ms6ikn6k2rw5k",
+                "name": "Serena",
+                "pos": "ZAG",
+                "rating": 85,
+                "avulso": false
+              }
+            ]
+          }
+        },
+        "formB": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        },
+        "formP": {
+          "ZAG": 2,
+          "VOL": 1,
+          "MC": 2,
+          "ATA": 1
+        }
+      },
+      "voteOpen": true,
+      "votes": {
+        "ms6ij3hvaku58": 5,
+        "mtag9bgei09p0": 4,
+        "mtag7qf71ijvx": 1,
+        "msg9d8zduqjhg": 1
+      },
+      "voteClosed": true
+    }
+  ]
+}
