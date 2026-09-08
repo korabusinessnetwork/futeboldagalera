@@ -15,7 +15,7 @@
   e-mail/senha, que é grátis, destravou o adapter sozinha.
 - Limite de verificação: o login não foi exercitado contra uma conta real — criar conta exige o
   painel ou a `service_role`. Critérios 3 e 4 cobertos por evidência de código.
-- Commit: `PENDENTE` na branch `claude/adapter-supabase`
+- Commit: `1860467` na branch `claude/adapter-supabase`
 - Pendente de decisão: nenhuma. Para abrir o app contra o Supabase, seguir `docs/10-operacao.md`
   (criar conta com Auto Confirm + SQL da primeira `membership`).
 - Próximo item recomendado: **gateway de pagamento (Fase 4, item 3)** — é o único item que ainda
