@@ -14,7 +14,7 @@
   apagado no fim
 - Aprendido: `memory/bugs.md` (2 bugs), `memory/learnings.md` (1 aprendizado), resultado apendado em
   `specs/migracao-legado.md`
-- Commit: `PENDENTE` na branch `claude/adapter-supabase`
+- Commit: `c645ab3` na branch `claude/adapter-supabase`
 - **Pendente de decisão**: a carga de produção não pôde ser feita. Falta o `dump.json` do portal
   antigo ou a URL do app no Azure para baixá-lo — `seed/demo.json` não serve como dado de produção.
   Falta também escolher o slug e o nome definitivos do grupo (hoje o app abre em `/t/demo`).
