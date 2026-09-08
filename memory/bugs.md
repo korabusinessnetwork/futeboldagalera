@@ -61,3 +61,34 @@ sessão chegava em dobro no store.
 **Correção**: trava de módulo `authIniciada` em `src/data/store.ts`.
 **Próxima vez**: efeito que assina algo global precisa ou de cleanup de verdade, ou de trava de
 idempotência. Em StrictMode o sintoma aparece em dev; sem ele, só em produção e mais tarde.
+
+## 2026-09-08 · O importador levaria o histórico para o banco sem escalação nenhuma
+
+`scripts/import-legacy.mjs` gravava só `formation_a`/`formation_b` e ignorava o blob da escalação.
+A coluna `matches.lineup jsonb` nasceu na rodada 1 (migration `0003_adapter.sql`) e o script nunca
+foi atualizado. As 5 partidas do `seed/demo.json` têm escalação — e as do portal real também.
+Importar assim entregaria um histórico com placar e sem time.
+
+**Correção**: o script grava `lineup` (com os ids de jogador já reescritos para os UUIDs novos) e
+`draw_seed`. Conferido no banco: 80 ids dentro do blob, 0 quebrados.
+**Próxima vez**: migration que adiciona coluna que o domínio lê exige varrer **todos** os escritores,
+não só o adapter — importador, seed e script de carga entram na conta.
+
+## 2026-09-08 · Reimportar num grupo existente estouraria a chave estrangeira
+
+Dois defeitos somados no `import-legacy.mjs`:
+
+1. O UUID determinístico saía de `sha1(tenantId:kind:id)`, com `tenantId` gerado aleatoriamente a
+   cada execução. Duas execuções produziam ids diferentes para o mesmo jogador — o `on conflict do
+   nothing` não protegia nada, porque o conflito nunca acontecia.
+2. O `insert into tenants ... on conflict (slug) do nothing` mantinha o tenant antigo, mas todas as
+   linhas filhas cravavam o `tenantId` **novo**, apontando para um tenant que não foi criado.
+
+Juntos: reimportar duplicaria tudo, ou quebraria na FK de `tenant_id`.
+
+**Correção**: o UUID deriva do **slug** (chave estável), e todo `tenant_id` sai de
+`(select id from tenants where slug = ...)`. Provado no banco: segunda carga com `--tenant-id`
+diferente e slug existente não duplicou nada — 36/5/90/68 antes e depois.
+**Próxima vez**: id determinístico tem que derivar da chave estável do negócio (o slug), nunca de
+algo gerado na execução. E `on conflict do nothing` num pai obriga os filhos a resolverem o pai por
+consulta, não por literal.

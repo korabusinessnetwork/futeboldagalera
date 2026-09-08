@@ -86,8 +86,12 @@ node scripts/import-legacy.mjs dump.json --slug pmnh --name "PMNH & Amigos" > ca
 psql "$DATABASE_URL" -f carga.sql
 ```
 
-UUID determinístico a partir do id antigo: reimportar não duplica. Também dá
-para importar direto pela aba Histórico, sem banco.
+UUID determinístico a partir do slug: reimportar não duplica, mesmo se o grupo
+já existir no banco. A escalação de cada partida vai junto, em `matches.lineup`.
+Também dá para importar direto pela aba Histórico, sem banco.
+
+O procedimento completo, com a conferência pós-carga, está em
+`docs/10-operacao.md`.
 
 ## Estrutura
 

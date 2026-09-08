@@ -59,7 +59,8 @@ Para dar acesso a mais gente, repita o passo 1 e troque `'owner'` por `'admin'`,
 
 ## Migração do app antigo (Fase 5)
 
-**Faça o backup antes do plano do Azure expirar.** `GET /api/data` está aberto:
+**Faça o backup antes do plano do Azure expirar.** `GET /api/data` está aberto,
+e é o único insumo que não dá para recriar depois:
 
 ```bash
 curl -s https://<app-antigo>/api/data > dump.json
@@ -67,24 +68,60 @@ curl -s https://<app-antigo>/api/data > dump.json
 
 Duas rotas a partir daí:
 
-1. **Direto no app**: aba Histórico → Importar JSON. Serve para validar o
+1. **Direto no app**: aba Histórico → Importar JSON. Serve para conferir o
    conteúdo antes de subir pro banco.
 2. **Para o Postgres**:
 
 ```bash
-node scripts/import-legacy.mjs dump.json \
-  --slug pmnh --name "PMNH & Amigos" --tagline "Confusão, Cultura e Ladaia" > carga.sql
+node scripts/import-legacy.mjs dump.json   --slug pmnh --name "PMNH & Amigos" --tagline "Confusão, Cultura e Ladaia" > carga.sql
 psql "$DATABASE_URL" -f carga.sql
 ```
 
-O script gera UUID determinístico a partir do id antigo (`sha1(tenant:kind:id)`),
-então reimportar não duplica: todo insert é `on conflict do nothing`. Ele também
-reconstrói `slot`, `is_starter`, `out_of_position` e `rating_at_draw` a partir da
-escalação de cada partida, e converte os votos agregados em linhas
-`legacy-N` para não perder a apuração histórica.
+O que o script garante:
 
-Rodando sobre o dump de exemplo: 36 jogadores, 5 partidas, 90 participações,
-68 votos.
+- **UUID determinístico** a partir do slug (`sha1(slug:kind:id)`), não do id do
+  tenant. Reimportar não duplica, mesmo que o grupo já exista no banco com outro
+  id — todo insert é `on conflict do nothing`.
+- **`tenant_id` resolvido por subselect** do slug. Se o grupo já existir, a carga
+  soma ao que está lá em vez de apontar para um tenant que não foi criado.
+- **A escalação inteira** vai para `matches.lineup`, com os ids de jogador já
+  reescritos para os UUIDs novos, mais `draw_seed` e `formation_a`/`formation_b`.
+  Sem isso o histórico chega ao banco sem escalação nenhuma.
+- `slot`, `is_starter`, `out_of_position` e `rating_at_draw` reconstruídos a
+  partir da escalação de cada partida.
+- Votos agregados viram linhas `legacy-N`, preservando a apuração histórica sem
+  inventar votante.
+- `is_monthly`, `deleted_at` e a posição criada pelo grupo (`ALA`, `LIB`)
+  carregados como estão. Quem saiu do grupo não ressuscita como ativo.
+
+Se algum jogador aparecer numa partida sem estar no elenco do dump, o script
+**para antes de gerar qualquer SQL** e lista os ids — a FK estouraria no meio da
+carga. Para seguir mesmo assim, deixando essas participações de fora:
+`--ignorar-orfaos`.
+
+### Conferir depois da carga
+
+Troque o slug e compare com o que o dump tinha:
+
+```sql
+with t as (select id from tenants where slug = 'pmnh')
+select (select count(*) from players p, t where p.tenant_id = t.id)          as jogadores,
+       (select count(*) from matches m, t where m.tenant_id = t.id)          as partidas,
+       (select count(*) from matches m, t
+         where m.tenant_id = t.id and m.lineup is not null)                  as com_escalacao,
+       (select count(*) from match_entries e join matches m on m.id = e.match_id, t
+         where m.tenant_id = t.id)                                           as participacoes,
+       (select count(*) from craque_votes v join matches m on m.id = v.match_id, t
+         where m.tenant_id = t.id)                                           as votos;
+```
+
+Rodando sobre `seed/demo.json`: 36 jogadores, 5 partidas, 5 com escalação,
+90 participações, 68 votos. Esses números foram conferidos contra o banco de
+verdade num tenant descartável, incluindo uma segunda carga para provar que
+reimportar não duplica.
+
+Depois da carga, ligue a `membership` do dono no grupo novo — mesmo SQL da seção
+anterior, trocando o slug.
 
 ## Deploy
 

@@ -1,5 +1,26 @@
 # Ledger do loop
 
+## Rodada 3 — Migração do portal antigo — 2026-09-08
+
+- Spec: `specs/migracao-legado.md`
+- Resultado da review: **aprovado sem ressalvas** — 12/12 critérios, `npm test` verde (154 testes),
+  `npm run build` limpo
+- Corrigido nesta rodada, no `scripts/import-legacy.mjs`: a escalação não era gravada
+  (`matches.lineup` nasceu na rodada 1 e o script não sabia), e a reimportação num grupo existente
+  duplicaria tudo ou estouraria a FK (UUID derivado de `tenantId` aleatório + id literal nas linhas
+  filhas)
+- Ensaio contra o banco real: carga do `seed/demo.json` num tenant `ensaio-import`, números batendo
+  (36/5/5/90/68), segunda carga provando idempotência, 80 ids de escalação com 0 quebrados, tenant
+  apagado no fim
+- Aprendido: `memory/bugs.md` (2 bugs), `memory/learnings.md` (1 aprendizado), resultado apendado em
+  `specs/migracao-legado.md`
+- Commit: `PENDENTE` na branch `claude/adapter-supabase`
+- **Pendente de decisão**: a carga de produção não pôde ser feita. Falta o `dump.json` do portal
+  antigo ou a URL do app no Azure para baixá-lo — `seed/demo.json` não serve como dado de produção.
+  Falta também escolher o slug e o nome definitivos do grupo (hoje o app abre em `/t/demo`).
+- Próximo item recomendado: **onboarding de tenant em 3 passos (Fase 4, item 4)** — é o último item
+  gratuito da Fase 4, e é ele que substitui o passo manual de SQL para criar grupo e membership.
+
 ## Rodada 2 — Auth real (e-mail/senha + memberships) — 2026-09-08
 
 - Spec: `specs/auth-real.md`

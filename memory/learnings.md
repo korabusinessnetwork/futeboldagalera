@@ -73,3 +73,17 @@ um SQL que liga a `membership` por e-mail, sem e-mail de cliente cravado em cód
 
 **Próxima vez**: quando o bootstrap de permissão não tem dono escrito, documentar o passo manual
 custa uma linha e não fecha porta nenhuma. Inventar o fluxo fecha.
+
+## 2026-09-08 · Ensaio num tenant descartável vale mais que revisar o SQL gerado
+
+O importador foi validado rodando a carga inteira do `seed/demo.json` num tenant `ensaio-import` no
+projeto de verdade, conferindo os números contra o dump (36 jogadores, 5 partidas, 5 com escalação,
+90 participações, 68 votos), rodando **uma segunda carga** para provar idempotência, e apagando o
+tenant no fim.
+
+Os dois bugs mais caros da rodada — escalação perdida e FK órfã na reimportação — não apareceriam
+lendo o SQL: o primeiro é uma coluna ausente (SQL válido, dado faltando) e o segundo só se
+manifesta na segunda execução.
+
+**Próxima vez**: script de carga se valida executando contra o banco real num tenant descartável,
+não lendo a saída. Multi-tenancy torna isso barato: o descarte é um `delete` por `slug`.

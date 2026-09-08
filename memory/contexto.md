@@ -22,13 +22,17 @@ Fases 0–3 e 5 entregues. Fase 4 com o domínio de cobrança pronto e testado, 
 (rodada 2, `specs/auth-real.md`) entregues; falta o gateway. Ver
 `docs/11-roadmap.md`.
 
-134 testes passando. Build limpo.
+154 testes passando. Build limpo.
 
 O projeto Supabase `xqqxfmcwamcpyrheofcb` está provisionado com as migrations
 0001–0004 aplicadas. Para abrir o app contra ele é preciso criar a conta dona no
 painel e ligar a primeira `membership` por SQL — o passo a passo está em
 `docs/10-operacao.md`. Sem `membership` a RLS esconde o grupo, e isso é o
 comportamento correto, não um bug.
+
+O caminho de migração do portal antigo está pronto e provado contra o banco
+(rodada 3), mas a carga de produção está parada por falta do `dump.json` ou da
+URL do app no Azure. **Esse é o único item com prazo fora do nosso controle.**
 
 ## Decisões que não devem ser revisitadas sem motivo novo
 
