@@ -1,18 +1,24 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRatings, useStore } from '../../data/store'
 import { FORMACOES, POSICOES, parseFormation, type FormationCode } from '../../domain/constants'
 import { DrawError, draw, newSeed, type Candidate } from '../../domain/draw'
 import { entriesFromLineup, todayISO } from '../../domain/match'
-import { importRoster } from '../../domain/roster'
-import type { Lineup, Pos } from '../../domain/types'
+import { importRoster, normName } from '../../domain/roster'
+import { basePos } from '../../domain/branding'
+import type { Lineup, Pos, PosCode } from '../../domain/types'
 import LineupView from '../components/LineupView'
 import { Avatar, Banner, Modal, Section } from '../components/ui'
+
+// acima disso a lista de confirmados vira um bloco com scroll proprio,
+// pra pagina nao crescer sem parar a cada nome novo
+const MAX_VISIVEIS = 8
 
 interface Confirmed {
   id: string
   name: string
-  pos: Pos | null
+  /** Rotulo que o grupo ve. Pode ser uma posicao propria; o motor recebe a base. */
+  pos: PosCode | null
   avulso: boolean
   gk: boolean
 }
@@ -22,6 +28,7 @@ export default function Sorteio() {
   const mutate = useStore((s) => s.mutate)
   const { byId: ratings, avg } = useRatings()
   const nav = useNavigate()
+  const base = (code: PosCode | null) => basePos(data.tenant.branding, code)
 
   const [formB, setFormB] = useState<FormationCode>('2-1-2-1')
   const [formP, setFormP] = useState<FormationCode>('2-1-2-1')
@@ -35,18 +42,34 @@ export default function Sorteio() {
   const [avulsoName, setAvulsoName] = useState('')
   const [avulsoPos, setAvulsoPos] = useState<Pos | ''>('')
   const [date, setDate] = useState(() => todayISO(data.tenant.branding.timezone))
+  const [busca, setBusca] = useState('')
 
   const roster = useMemo(
     () => data.players.filter((p) => !p.deletedAt).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR')),
     [data.players],
   )
+  // busca ignora acento e maiuscula, mesma normalizacao do colar-lista
+  const rosterFiltrado = useMemo(() => {
+    const q = normName(busca)
+    if (!q) return roster
+    return roster.filter((p) => normName(p.name).includes(q))
+  }, [roster, busca])
+  // com a lista rolando por dentro, quem entra por ultimo ficaria fora de vista
+  const listRef = useRef<HTMLDivElement>(null)
+  const prevLen = useRef(list.length)
+  useEffect(() => {
+    const el = listRef.current
+    if (el && list.length > prevLen.current) el.scrollTop = el.scrollHeight
+    prevLen.current = list.length
+  }, [list.length])
+
   const inList = new Set(list.map((c) => c.id))
   const gkCount = list.filter((c) => c.gk).length
   const need = parseFormation(formB).ZAG + parseFormation(formB).VOL + parseFormation(formB).MC + parseFormation(formB).ATA
   const needP = parseFormation(formP).ZAG + parseFormation(formP).VOL + parseFormation(formP).MC + parseFormation(formP).ATA
 
-  const add = (p: { id: string; name: string; pos: Pos | null }, avulso = false) =>
-    setList((l) => (l.some((c) => c.id === p.id) ? l : [...l, { ...p, avulso, gk: p.pos === 'GOL' && l.filter((c) => c.gk).length < 2 }]))
+  const add = (p: { id: string; name: string; pos: PosCode | null }, avulso = false) =>
+    setList((l) => (l.some((c) => c.id === p.id) ? l : [...l, { ...p, avulso, gk: base(p.pos) === 'GOL' && l.filter((c) => c.gk).length < 2 }]))
 
   const move = (i: number, dir: -1 | 1) =>
     setList((l) => {
@@ -63,7 +86,7 @@ export default function Sorteio() {
     const next: Confirmed[] = []
     for (const { player, posOverride } of found) {
       const pos = posOverride ?? player.pos
-      next.push({ id: player.id, name: player.name, pos, avulso: false, gk: pos === 'GOL' && next.filter((c) => c.gk).length < 2 })
+      next.push({ id: player.id, name: player.name, pos, avulso: false, gk: base(pos) === 'GOL' && next.filter((c) => c.gk).length < 2 })
     }
     setList(next)
     setPasteOpen(false)
@@ -74,7 +97,7 @@ export default function Sorteio() {
   const addAvulso = () => {
     const name = avulsoName.trim()
     if (!name) return
-    add({ id: `av-${Math.random().toString(36).slice(2, 8)}`, name, pos: (avulsoPos || null) as Pos | null }, true)
+    add({ id: `av-${Math.random().toString(36).slice(2, 8)}`, name, pos: (avulsoPos || null) as PosCode | null }, true)
     setAvulsoName('')
     setAvulsoPos('')
   }
@@ -84,7 +107,7 @@ export default function Sorteio() {
     const candidates: Candidate[] = list.map((c) => ({
       id: c.id,
       name: c.name,
-      pos: c.pos,
+      pos: base(c.pos),
       // avulso e quem nunca jogou recebem a media do grupo
       rating: c.avulso ? avg : (ratings.get(c.id) ?? avg),
       avulso: c.avulso,
@@ -175,7 +198,7 @@ export default function Sorteio() {
             </button>
           )}
         </div>
-        <div className="card overflow-hidden">
+        <div ref={listRef} className={`card ${list.length > MAX_VISIVEIS ? 'list-scroll overflow-y-auto' : 'overflow-hidden'}`}>
           {!list.length && <p className="px-3 py-6 text-center text-xs text-muted">Marque quem confirmou. A ordem manda: quem confirma primeiro é titular.</p>}
           {list.map((c, i) => (
             <div key={c.id} className="flex items-center gap-2 border-b border-line/60 px-2 py-1.5 last:border-0">
@@ -204,9 +227,39 @@ export default function Sorteio() {
       </div>
 
       <div className="mb-3">
-        <span className="label">Elenco</span>
+        <div className="mb-2 flex items-center justify-between">
+          <span className="label mb-0">
+            Elenco{busca && ` · ${rosterFiltrado.length} de ${roster.length}`}
+          </span>
+        </div>
+        <div className="mb-2 flex gap-2">
+          <input
+            className="input"
+            type="search"
+            placeholder="🔎 Buscar jogador"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            onKeyDown={(e) => {
+              // Enter confirma o primeiro da busca, pra marcar no teclado sem tirar a mao
+              if (e.key !== 'Enter') return
+              const alvo = rosterFiltrado.find((p) => !inList.has(p.id))
+              if (alvo) {
+                add(alvo)
+                setBusca('')
+              }
+            }}
+          />
+          {busca && (
+            <button className="btn px-3" onClick={() => setBusca('')} title="Limpar busca">
+              ✕
+            </button>
+          )}
+        </div>
+        {!rosterFiltrado.length && (
+          <p className="py-2 text-xs text-muted">Ninguém no elenco com esse nome. Dá pra entrar como avulso ali em cima.</p>
+        )}
         <div className="flex flex-wrap gap-1.5">
-          {roster.map((p) => (
+          {rosterFiltrado.map((p) => (
             <button
               key={p.id}
               className={`flex items-center gap-1.5 rounded-full border px-2 py-1 text-xs ${

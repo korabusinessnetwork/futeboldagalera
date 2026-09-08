@@ -1,11 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useStore } from '../../data/store'
-import { applyScoreToEntries, deriveResult, todayISO } from '../../domain/match'
+import { applyScoreToEntries, deriveResult, formatDate, todayISO } from '../../domain/match'
 import type { MatchEntry, Result, TeamKey } from '../../domain/types'
 import { Avatar, Banner, Modal, Section, Seg } from '../components/ui'
 
 type Draft = Record<string, MatchEntry>
+
+const RESULT_UI: Record<Result, { label: string; cls: string }> = {
+  v: { label: 'Vitória', cls: 'bg-accent text-black' },
+  e: { label: 'Empate', cls: 'bg-gold text-black' },
+  d: { label: 'Derrota', cls: 'bg-danger text-black' },
+}
 
 export default function NovaPartida() {
   const data = useStore((s) => s.data!)
@@ -20,6 +26,7 @@ export default function NovaPartida() {
   const [draft, setDraft] = useState<Draft>({})
   const [msg, setMsg] = useState<string | null>(null)
   const [confirmClose, setConfirmClose] = useState(false)
+  const [onlyLast, setOnlyLast] = useState(false)
 
   useEffect(() => {
     if (!editing) return
@@ -33,6 +40,20 @@ export default function NovaPartida() {
     () => data.players.filter((p) => !p.deletedAt).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR')),
     [data.players],
   )
+
+  /** Ultimo jogo com escalacao registrada; ao editar, o de antes desta partida. */
+  const lastMatch = useMemo(
+    () =>
+      data.matches
+        .filter((m) => m.id !== editId && m.entries.length > 0)
+        .sort((a, b) => b.date.localeCompare(a.date))[0] ?? null,
+    [data.matches, editId],
+  )
+  const lastIds = useMemo(
+    () => new Set((lastMatch?.entries ?? []).map((e) => e.playerId)),
+    [lastMatch],
+  )
+  const visiblePlayers = onlyLast ? players.filter((p) => lastIds.has(p.id)) : players
 
   const scoreBranco = sb === '' ? null : Number(sb)
   const scorePreto = sp === '' ? null : Number(sp)
@@ -65,7 +86,9 @@ export default function NovaPartida() {
       return { ...d, [id]: merged }
     })
 
+  const scoreReady = scoreBranco != null && scorePreto != null
   const entries = Object.values(draft)
+  const hiddenSelected = onlyLast ? entries.filter((e) => !lastIds.has(e.playerId)).length : 0
   const golsBranco = entries.filter((e) => e.team === 'branco').reduce((a, e) => a + e.goals, 0)
   const golsPreto = entries.filter((e) => e.team === 'preto').reduce((a, e) => a + e.goals, 0)
 
@@ -138,30 +161,64 @@ export default function NovaPartida() {
             />
           </div>
         </div>
-        {(scoreBranco != null || scorePreto != null) && (
-          <p className="text-[11px] text-muted">
-            Gols lançados por jogador: {golsBranco} × {golsPreto}. O placar oficial é o de cima; a diferença
-            costuma ser gol contra.
-          </p>
-        )}
+        <p className="text-[11px] text-muted">
+          O V/E/D de cada jogador sai deste placar, pelo time dele.
+          {(scoreBranco != null || scorePreto != null) &&
+            ` Gols lançados por jogador: ${golsBranco} × ${golsPreto}; o placar oficial é o de cima e a diferença costuma ser gol contra.`}
+        </p>
       </div>
 
+      {lastMatch && (
+        <div className="mb-2">
+          <button
+            type="button"
+            aria-pressed={onlyLast}
+            onClick={() => setOnlyLast((v) => !v)}
+            className={`btn w-full text-xs ${
+              onlyLast
+                ? 'border-transparent bg-gold text-black shadow-[0_0_16px_-2px_#ffd70066]'
+                : 'border-gold/60 bg-gold/10 text-gold'
+            }`}
+          >
+            <span aria-hidden>⚡</span>
+            Mostrar apenas jogadores escalados no último jogo · {formatDate(lastMatch.date)}
+          </button>
+          {onlyLast && hiddenSelected > 0 && (
+            <p className="mt-1 text-[11px] text-gold">
+              {hiddenSelected} marcado{hiddenSelected > 1 ? 's' : ''} fora deste filtro
+              {hiddenSelected > 1 ? ' continuam' : ' continua'} na partida.
+            </p>
+          )}
+        </div>
+      )}
+
       <div className="card overflow-hidden">
-        {players.map((p) => {
+        {!visiblePlayers.length && (
+          <p className="px-3 py-4 text-center text-sm text-muted">Ninguém do último jogo está no elenco.</p>
+        )}
+        {visiblePlayers.map((p) => {
           const e = draft[p.id]
+          const result = e ? deriveResult(e.team, scoreBranco, scorePreto) : 'e'
           return (
             <div key={p.id} className="border-b border-line/60 px-3 py-2 last:border-0">
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 accent-[var(--accent)]"
-                  checked={!!e}
-                  onChange={() => toggle(p.id)}
-                />
+              <button
+                type="button"
+                aria-pressed={!!e}
+                onClick={() => toggle(p.id)}
+                className="-mx-1 flex w-full items-center gap-2 rounded-xl px-1 py-1 text-left active:bg-card2"
+              >
+                <span
+                  aria-hidden
+                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border text-[11px] font-bold leading-none ${
+                    e ? 'border-transparent bg-accent text-black' : 'border-line bg-card2 text-transparent'
+                  }`}
+                >
+                  ✓
+                </span>
                 <Avatar name={p.name} photoUrl={p.photoUrl} size={28} />
                 <span className="min-w-0 flex-1 truncate text-sm font-semibold">{p.name}</span>
                 <span className="chip">{p.pos ?? '—'}</span>
-              </div>
+              </button>
               {e && (
                 <div className="mt-2 flex flex-wrap items-center gap-2 pl-6">
                   <Seg<TeamKey>
@@ -173,16 +230,18 @@ export default function NovaPartida() {
                       { value: 'preto', label: teamName('preto') },
                     ]}
                   />
-                  <Seg<Result>
-                    size="sm"
-                    value={e.result}
-                    onChange={(v) => patch(p.id, { result: v })}
-                    options={[
-                      { value: 'v', label: 'V', tone: 'ok' },
-                      { value: 'e', label: 'E', tone: 'warn' },
-                      { value: 'd', label: 'D', tone: 'bad' },
-                    ]}
-                  />
+                  {scoreReady ? (
+                    <span
+                      className={`rounded-xl px-2 py-1 text-xs font-semibold ${RESULT_UI[result].cls}`}
+                      title={`${RESULT_UI[result].label} — automático pelo placar`}
+                    >
+                      {result.toUpperCase()}
+                    </span>
+                  ) : (
+                    <span className="chip" title="Preencha o placar para definir V/E/D">
+                      V/E/D
+                    </span>
+                  )}
                   <label className="flex items-center gap-1 text-xs text-muted">
                     ⚽
                     <input

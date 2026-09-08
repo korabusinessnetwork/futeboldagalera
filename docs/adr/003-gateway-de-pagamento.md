@@ -1,6 +1,12 @@
 # ADR-003 · Gateway de pagamento
 
-**Status**: proposto · **Data**: 2026-09-02
+**Status**: superado em parte · **Data**: 2026-09-02
+
+> **08/09/2026** — a escolha passou a ser **Asaas** para cartão e Pix no mesmo
+> provedor, e a tabela de preços mudou (grátis 6 jogadores, R$ 29,90 com 16,
+> R$ 69,90 com 24, mais R$ 2,00 por jogador adicional em qualquer plano). Ver
+> `docs/07-cobranca.md`. Este ADR precisa ser reescrito na hora de integrar —
+> o que está abaixo é o raciocínio original, com Stripe.
 
 ## Contexto
 

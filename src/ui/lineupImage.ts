@@ -1,3 +1,4 @@
+import { readableOn, teamColor, teamDot, teamName } from '../domain/branding'
 import { CANVAS_ESCALACAO, formationCode } from '../domain/constants'
 import { buildDisp } from '../domain/names'
 import { formatDate } from '../domain/match'
@@ -22,11 +23,10 @@ export function lineupText(lineup: Lineup, branding: TenantBranding, date: strin
   const name = (p: LineupPlayer) => disp.get(p.id) ?? p.name
   const out: string[] = [`⚽ ${branding.name}, Escalação ${formatDate(date)}`, '']
 
-  const badge: Record<TeamKey, string> = { branco: '⚪', preto: '⚫' }
   for (const key of ['branco', 'preto'] as TeamKey[]) {
     const t = lineup.teams[key]
     const form = formationCode(key === 'branco' ? lineup.formB : lineup.formP)
-    out.push(`${badge[key]} ${branding.teamNames[key].toUpperCase()} (${form})`)
+    out.push(`${teamDot(teamColor(branding, key))} ${teamName(branding, key).toUpperCase()} (${form})`)
     if (t.gk) out.push(`🧤 ${name(t.gk)}`)
     for (const row of [...ROWS].reverse()) {
       for (const p of t.line.filter((x) => x.slot === row)) {
@@ -105,13 +105,13 @@ export async function renderLineupCanvas(opts: DrawOpts): Promise<HTMLCanvasElem
     if (src) imgCache.set(id, await loadImage(src))
   }
 
-  const drawPlayer = (p: LineupPlayer, cx: number, cy: number) => {
+  const drawPlayer = (p: LineupPlayer, cx: number, cy: number, shirt: string, ink: string) => {
     const r = 44
     ctx.save()
     ctx.beginPath()
     ctx.arc(cx, cy, r, 0, Math.PI * 2)
     ctx.closePath()
-    ctx.fillStyle = '#18220f'
+    ctx.fillStyle = shirt
     ctx.fill()
     ctx.lineWidth = 4
     ctx.strokeStyle = p.oop ? '#ffd700' : branding.primaryColor
@@ -121,7 +121,7 @@ export async function renderLineupCanvas(opts: DrawOpts): Promise<HTMLCanvasElem
       ctx.clip()
       ctx.drawImage(img, cx - r, cy - r, r * 2, r * 2)
     } else {
-      ctx.fillStyle = '#93b29b'
+      ctx.fillStyle = ink
       ctx.font = '800 34px system-ui, sans-serif'
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
@@ -142,15 +142,17 @@ export async function renderLineupCanvas(opts: DrawOpts): Promise<HTMLCanvasElem
   for (const key of ['branco', 'preto'] as TeamKey[]) {
     const t = lineup.teams[key]
     const form = formationCode(key === 'branco' ? lineup.formB : lineup.formP)
+    const shirt = teamColor(branding, key)
+    const ink = readableOn(shirt)
 
     // faixa do time
-    ctx.fillStyle = key === 'branco' ? '#e8f3ea' : '#1b1f1a'
+    ctx.fillStyle = shirt
     roundRect(ctx, 28, y + 6, W - 56, 54, 16)
     ctx.fill()
-    ctx.fillStyle = key === 'branco' ? '#0a0d0a' : '#e8f3ea'
+    ctx.fillStyle = ink
     ctx.font = '800 30px system-ui, sans-serif'
     ctx.textAlign = 'left'
-    ctx.fillText(branding.teamNames[key].toUpperCase(), 52, y + 44)
+    ctx.fillText(teamName(branding, key).toUpperCase(), 52, y + 44)
     ctx.textAlign = 'right'
     ctx.font = '600 26px system-ui, sans-serif'
     ctx.fillText(form, W - 52, y + 44)
@@ -178,9 +180,9 @@ export async function renderLineupCanvas(opts: DrawOpts): Promise<HTMLCanvasElem
     rows.forEach((row, i) => {
       const cy = fieldTop + bandH * (i + 0.62)
       const step = (W - 120) / (row.length + 1)
-      row.forEach((p, k) => drawPlayer(p, 60 + step * (k + 1), cy))
+      row.forEach((p, k) => drawPlayer(p, 60 + step * (k + 1), cy, shirt, ink))
     })
-    if (t.gk) drawPlayer(t.gk, W / 2, fieldTop + fieldH - 74)
+    if (t.gk) drawPlayer(t.gk, W / 2, fieldTop + fieldH - 74, shirt, ink)
 
     // reservas
     const resY = y + PANEL

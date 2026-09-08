@@ -14,7 +14,7 @@
 | 🏆 Ranking | público | classificação da temporada, com medalhas e empate compartilhado |
 | ⚽ Artilharia | público | gols, média por jogo, total do campeonato |
 | 🟢 Escalação do dia | público **com gate** | só aparece depois que o admin libera |
-| ⭐ Craque do jogo | público | votação 21:30–22:30, modo suspense, card compartilhável |
+| ⭐ Craque do jogo | público | abre 21:30 e dura 30 min (fecha sozinha), admin encerra antes se quiser, modo suspense, card compartilhável |
 | 📅 Histórico | público | partidas em ordem reversa; manutenção só para admin |
 | 👤 Jogadores | admin | CRUD do elenco, foto comprimida no cliente |
 | ➕ Partida | admin | placar, V/E/D auto-derivado, gols e gols contra |

@@ -79,10 +79,11 @@ for (const m of matches) {
   const status = m.pending ? 'pending' : 'finished'
   const craque = m.craque ? q(uuidFor('player', m.craque)) : 'null'
   const voteState = m.voteOpen ? 'open' : m.voteClosed ? 'closed' : 'auto'
+  const voteOpenedAt = voteState === 'open' && m.voteOpenedAt ? q(m.voteOpenedAt) : 'null'
   out.push(
-    `insert into matches (id, tenant_id, date, status, score_a, score_b, lineup_published, vote_state, craque_player_id, formation_a, formation_b) values (` +
+    `insert into matches (id, tenant_id, date, status, score_a, score_b, lineup_published, vote_state, vote_opened_at, craque_player_id, formation_a, formation_b) values (` +
       `${q(id)}, ${q(tenantId)}, ${q(m.date)}, ${q(status)}, ${n(m.scoreBranco)}, ${n(m.scorePreto)}, ` +
-      `${b(m.escalaPub !== false)}, ${q(voteState)}, ${craque}, ${q(formOf(m.lineup?.formB))}, ${q(formOf(m.lineup?.formP))})` +
+      `${b(m.escalaPub !== false)}, ${q(voteState)}, ${voteOpenedAt}, ${craque}, ${q(formOf(m.lineup?.formB))}, ${q(formOf(m.lineup?.formP))})` +
       ` on conflict (id) do nothing;`,
   )
 

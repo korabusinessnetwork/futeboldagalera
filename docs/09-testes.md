@@ -13,7 +13,7 @@ npm run build     # tsc -b && vite build
 | `rating.test.ts` | fórmula da nota, teto de gols por jogo, média do grupo |
 | `draw.test.ts` | ordem de confirmação, formação, goleiros, determinismo, `oop`, passe final |
 | `roster.test.ts` | `normName`, numeração, sinônimos de posição, fuzzy match, nomes de exibição |
-| `craque.test.ts` | janela 21:30–22:30, overrides do admin, elegíveis, apuração |
+| `craque.test.ts` | abertura 21:30 + 30 min, timer da abertura manual, encerramento antecipado, elegíveis, apuração |
 | `plan.test.ts` | teste de 3 meses, recorrência, blocos de 30 dias, graça, 402, vitalício |
 | `seed.test.ts` | importador do dump real, e os números do grupo travados |
 

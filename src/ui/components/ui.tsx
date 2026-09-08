@@ -59,6 +59,51 @@ export function Modal({
   )
 }
 
+/** Modal de confirmacao para acao que o admin nao deveria disparar sem querer. */
+export function Confirm({
+  open,
+  title,
+  confirmLabel,
+  danger,
+  onConfirm,
+  onClose,
+  children,
+}: {
+  open: boolean
+  title: string
+  confirmLabel: string
+  danger?: boolean
+  onConfirm: () => void
+  onClose: () => void
+  children: ReactNode
+}) {
+  return (
+    <Modal
+      open={open}
+      title={title}
+      onClose={onClose}
+      footer={
+        <>
+          <button className="btn" onClick={onClose}>
+            Cancelar
+          </button>
+          <button
+            className={danger ? 'btn btn-danger' : 'btn btn-primary'}
+            onClick={() => {
+              onConfirm()
+              onClose()
+            }}
+          >
+            {confirmLabel}
+          </button>
+        </>
+      }
+    >
+      {children}
+    </Modal>
+  )
+}
+
 export function Avatar({
   name,
   photoUrl,

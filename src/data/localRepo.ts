@@ -191,6 +191,8 @@ export class LocalRepository implements Repository {
   async setVoteState(id: string, state: VoteState): Promise<Match> {
     const m = this.match(id)
     m.voteOpen = state === 'open' ? true : undefined
+    // O carimbo e o que faz a votacao aberta na mao fechar sozinha em 30 min.
+    m.voteOpenedAt = state === 'open' ? new Date().toISOString() : undefined
     m.voteClosed = state === 'closed' ? true : undefined
     this.persist()
     return { ...m }

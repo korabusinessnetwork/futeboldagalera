@@ -32,7 +32,7 @@ npm run build   # tsc -b && vite build
 | 🏆 | **Ranking** | vitória 4, empate 2, derrota 1; empate real divide a mesma posição; filtro por temporada |
 | ⚽ | **Artilharia** | gols, média por jogo, total do campeonato |
 | 🟢 | **Escalação do dia** | nasce oculta; admin libera, ajusta arrastando dois jogadores, compartilha PNG ou texto de WhatsApp |
-| ⭐ | **Craque do jogo** | janela 21:30–22:30, modo suspense, card compartilhável, override do admin |
+| ⭐ | **Craque do jogo** | abre 21:30 e dura 30 min (fecha sozinha), admin abre/encerra na hora que quiser, modo suspense, card compartilhável |
 | 📅 | **Histórico** | partidas com tags por jogador; export/import JSON |
 | 👤 | **Jogadores** | CRUD, foto comprimida no cliente (320×320 q=0.72) |
 | ➕ | **Partida** | placar, V/E/D auto-derivado do time, gols e gols contra |
@@ -68,6 +68,11 @@ Cartão vinculado no cadastro → **3 meses grátis** → o dono escolhe:
 | Galera | R$ 19,90 | 12 |
 | Time | R$ 39,90 | 24 |
 | Liga | R$ 69,90 | ilimitado |
+
+> **Superado (08/09/2026).** A tabela acima é a que está no código. A nova — grátis
+> com 6 jogadores, R$ 29,90 com 16, R$ 69,90 com 24, mais R$ 2,00 por jogador
+> adicional em qualquer plano — está em `docs/07-cobranca.md` e entra junto com o
+> Asaas.
 
 Estourar o limite bloqueia cadastro de jogador com **402**; tempo vencido derruba
 a escrita. **Nenhum dado é apagado por causa de cobrança.** O plano vitalício

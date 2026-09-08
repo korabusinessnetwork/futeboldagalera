@@ -28,9 +28,13 @@ export const LINE_SIZE = 6
 export const JITTER_SORTEIO = 2.5
 export const MAX_ITER_BALANCEAMENTO = 400
 
-/** Janela do Craque do Jogo, em minutos desde a meia-noite (America/Sao_Paulo). */
+/** Abertura automatica do Craque do Jogo, em minutos desde a meia-noite (fuso do grupo). */
 export const CRAQUE_OPEN_MIN = 1290 // 21:30
-export const CRAQUE_CLOSE_MIN = 1350 // 22:30
+/** A votacao dura 30 minutos a partir da abertura, automatica ou manual. */
+export const CRAQUE_DURATION_MIN = 30
+export const CRAQUE_DURATION_MS = CRAQUE_DURATION_MIN * 60_000
+/** Fechamento da janela automatica: 22:00. */
+export const CRAQUE_CLOSE_MIN = CRAQUE_OPEN_MIN + CRAQUE_DURATION_MIN
 
 export const FOTO = { size: 320, quality: 0.72 } as const
 export const CANVAS_ESCALACAO = { w: 900, h: 1900 } as const

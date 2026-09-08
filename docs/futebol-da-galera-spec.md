@@ -69,7 +69,8 @@ Fonte analisada: `index.html` único de 129 KB (HTML + CSS + JS vanilla, sem fra
         "formP": { ... }
       },
       "votes": { "<playerId>": 4, "...": 2 },
-      "voteOpen": true,                     // override manual do admin
+      "voteOpen": true,                     // abertura manual do admin
+      "voteOpenedAt": "2026-08-26T00:30:00Z", // carimbo: fecha sozinha 30 min depois
       "voteClosed": true,                   // override manual do admin
       "craque": "<playerId>"                // definido = votação finalizada
     }
@@ -134,7 +135,7 @@ O app tem 8 abas numa bottom nav fixa. As marcadas com 🔒 só aparecem para ad
 - Botões: compartilhar imagem (Web Share API com arquivo), baixar PNG.
 
 ### 3.7 ⭐ Craque do Jogo (público)
-- Janela de votação **21:30 às 22:30 (America/Sao_Paulo)**, constantes `CRAQUE_OPEN_MIN=1290`, `CRAQUE_CLOSE_MIN=1350`.
+- Votação **abre 21:30 (America/Sao_Paulo) e dura 30 minutos**, fechando sozinha às 22:00 — constantes `CRAQUE_OPEN_MIN=1290`, `CRAQUE_DURATION_MIN=30`, `CRAQUE_CLOSE_MIN=1320`. A abertura manual do admin vale os mesmos 30 minutos, e ele pode encerrar antes.
 - Estados: `before` (contagem regressiva), `open` (votação), `closed` (apuração), `finalized` (craque definido).
 - Elegíveis: todos os jogadores da escalação, titulares, goleiros e reservas dos dois times.
 - **Modo suspense**: durante a votação a parcial fica escondida, o resultado só aparece ao encerrar.
@@ -229,6 +230,11 @@ Reservas: Fulano, Ciclano
 | **Time** | **R$ 39,90/mês** | até **24** | público |
 | **Liga** | **R$ 69,90/mês** | **ilimitado** | público |
 | **Vitalício** | definido na venda | ilimitado | **oculto no checkout, só backend** |
+
+> **Superado (08/09/2026).** A tabela acima é a que está no código. A nova — grátis
+> com 6 jogadores, R$ 29,90 com 16, R$ 69,90 com 24, mais R$ 2,00 por jogador
+> adicional em qualquer plano — está em `docs/07-cobranca.md` e entra junto com o
+> Asaas.
 
 Regras de enforcement:
 - O limite conta **jogadores ativos** (`deleted_at IS NULL`) do tenant, avulsos de sorteio **não contam** (são efêmeros, não viram cadastro até a partida ser criada).
@@ -462,7 +468,8 @@ FORMACOES = ['2-1-2-1','2-2-1-1','3-1-1-1','2-1-1-2','2-0-3-1','3-0-2-1','2-0-2-
 POSICOES = ['GOL','ZAG','VOL','MC','ATA']
 RATING = 0.60*aproveitamento + 0.25*(taxaVitoria*100) + 0.15*(min(golsPorJogo,1)*100)
 CRAQUE_ABRE  = 21:30 America/Sao_Paulo
-CRAQUE_FECHA = 22:30 America/Sao_Paulo
+CRAQUE_DURACAO = 30 min (fecha sozinha)
+CRAQUE_FECHA = 22:00 America/Sao_Paulo
 JITTER_SORTEIO = ±2.5 pontos
 MAX_ITER_BALANCEAMENTO = 400
 FOTO = 320x320 JPEG q=0.72, crop central

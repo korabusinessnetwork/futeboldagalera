@@ -1,3 +1,4 @@
+import { TEAM_COLORS_DEFAULT } from '../domain/branding'
 import { PALETA_DEFAULT } from '../domain/constants'
 import { startTrial } from '../domain/plan'
 import type { Subscription, Tenant } from '../domain/types'
@@ -15,6 +16,7 @@ export function defaultTenant(): Tenant {
       instagramUrl: null,
       timezone: 'America/Sao_Paulo',
       teamNames: { branco: 'Branco', preto: 'Preto' },
+      teamColors: { ...TEAM_COLORS_DEFAULT },
     },
   }
 }

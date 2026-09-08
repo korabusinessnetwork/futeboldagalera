@@ -1,9 +1,19 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useIsAdmin, useStore } from '../../data/store'
-import { craqueState, eligibleForCraque, msUntilOpen, tallyVotes, voteStorageKey } from '../../domain/craque'
+import { CRAQUE_CLOSE_MIN, CRAQUE_DURATION_MIN, CRAQUE_OPEN_MIN } from '../../domain/constants'
+import {
+  craqueState,
+  eligibleForCraque,
+  type Eligible,
+  minuteLabel,
+  msUntilClose,
+  msUntilOpen,
+  tallyVotes,
+  voteStorageKey,
+} from '../../domain/craque'
 import { formatDate } from '../../domain/match'
-import { Avatar, Banner, Empty, Modal, Section } from '../components/ui'
+import { Avatar, Banner, Confirm, Empty, Modal, Section } from '../components/ui'
 import { deviceKey, renderCraqueCanvas } from '../craqueImage'
 import { downloadCanvas, shareCanvas } from '../lineupImage'
 
@@ -24,6 +34,9 @@ export default function Craque() {
   const [now, setNow] = useState(() => new Date())
   const [msg, setMsg] = useState<string | null>(null)
   const [pickCraque, setPickCraque] = useState(false)
+  const [confirmUndo, setConfirmUndo] = useState(false)
+  const [confirmClose, setConfirmClose] = useState(false)
+  const [craqueChoice, setCraqueChoice] = useState<Eligible | null>(null)
 
   useEffect(() => {
     const t = setInterval(() => setNow(new Date()), 1000)
@@ -46,6 +59,7 @@ export default function Craque() {
 
   const tz = data.tenant.branding.timezone
   const state = craqueState(match, now, tz)
+  const msLeft = state === 'open' ? msUntilClose(match, now, tz) : null
   const eligible = eligibleForCraque(match)
   const { rows, total, leaders } = tallyVotes(match)
   const photo = (id: string) => data.players.find((p) => p.id === id)?.photoUrl ?? null
@@ -109,14 +123,28 @@ export default function Craque() {
           <div className="tabular text-4xl font-extrabold text-accent">
             {countdown(msUntilOpen(match, now, tz))}
           </div>
-          <div className="mt-2 text-[11px] text-muted">Janela: 21:30 às 22:30 ({tz})</div>
+          <div className="mt-2 text-[11px] text-muted">
+            Abre {minuteLabel(CRAQUE_OPEN_MIN)} e dura {CRAQUE_DURATION_MIN} min, até{' '}
+            {minuteLabel(CRAQUE_CLOSE_MIN)} ({tz})
+          </div>
         </div>
       )}
 
       {state === 'open' && (
         <>
+          <div className="card mb-3 px-4 py-6 text-center">
+            <div className="mb-1 text-xs uppercase tracking-wide text-muted">A votação encerra em</div>
+            <div className="tabular text-4xl font-extrabold text-accent">
+              {msLeft === null ? '--:--:--' : countdown(msLeft)}
+            </div>
+            <div className="mt-2 text-[11px] text-muted">
+              {msLeft === null
+                ? 'Aberta pelo admin. Encerra quando ele mandar.'
+                : `${CRAQUE_DURATION_MIN} minutos a partir da abertura`}
+            </div>
+          </div>
           <Banner>
-            🕘 Votação aberta até 22:30. A parcial fica escondida: o resultado só aparece no encerramento.
+            🕘 A parcial fica escondida: o resultado só aparece no encerramento.
           </Banner>
           {alreadyVoted ? (
             <div className="card px-4 py-8 text-center text-sm text-muted">
@@ -205,44 +233,84 @@ export default function Craque() {
         <div className="card mt-4 space-y-2 p-3">
           <span className="label mb-0">Controles do admin</span>
           <div className="grid grid-cols-2 gap-2">
-            <button className="btn" onClick={() => void mutate((r) => r.setVoteState(match.id, 'open'))}>
-              Abrir votação
+            <button
+              className="btn"
+              disabled={state === 'open'}
+              onClick={() => void mutate((r) => r.setVoteState(match.id, 'open'))}
+            >
+              {state === 'open' ? 'Votação aberta' : 'Abrir votação'}
             </button>
-            <button className="btn" onClick={() => void mutate((r) => r.setVoteState(match.id, 'closed'))}>
-              Encerrar votação
+            <button className="btn" disabled={state !== 'open'} onClick={() => setConfirmClose(true)}>
+              Encerrar agora
             </button>
             <button className="btn" onClick={() => setPickCraque(true)}>
               Definir craque
             </button>
-            <button
-              className="btn"
-              onClick={() =>
-                void mutate(async (r) => {
-                  await r.setCraque(match.id, null)
-                  return r.setVoteState(match.id, 'auto')
-                })
-              }
-            >
+            <button className="btn" onClick={() => setConfirmUndo(true)}>
               Desfazer
             </button>
           </div>
           <p className="text-[11px] text-muted">
-            Sem override, a janela automática manda: 21:30 às 22:30 no dia da partida.
+            A votação dura {CRAQUE_DURATION_MIN} minutos e fecha sozinha. Sem abertura manual, ela abre{' '}
+            {minuteLabel(CRAQUE_OPEN_MIN)} no dia da partida.
           </p>
         </div>
       )}
 
-      <Modal open={pickCraque} title="Definir craque na mão" onClose={() => setPickCraque(false)}>
+      <Confirm
+        open={confirmClose}
+        title="Encerrar a votação agora?"
+        confirmLabel="Sim, encerrar"
+        danger
+        onClose={() => setConfirmClose(false)}
+        onConfirm={() => {
+          void mutate((r) => r.setVoteState(match.id, 'closed'))
+          setMsg('Votação encerrada. A apuração já está visível.')
+        }}
+      >
+        <p>
+          Faltam <b className="text-ink">{msLeft === null ? '—' : countdown(msLeft)}</b> para o
+          encerramento automático. Encerrando agora, ninguém mais vota e a apuração fica visível para
+          todo mundo.
+        </p>
+      </Confirm>
+
+      <Confirm
+        open={confirmUndo}
+        title="Desfazer a votação?"
+        confirmLabel="Sim, desfazer"
+        danger
+        onClose={() => setConfirmUndo(false)}
+        onConfirm={() => {
+          void mutate(async (r) => {
+            await r.setCraque(match.id, null)
+            return r.setVoteState(match.id, 'auto')
+          })
+          setMsg('Votação voltou para o modo automático.')
+        }}
+      >
+        <p>
+          Isso apaga o craque definido e devolve a votação de{' '}
+          <b className="text-ink">{formatDate(match.date)}</b> para o modo automático. Os votos já
+          registrados continuam salvos.
+        </p>
+      </Confirm>
+
+      <Modal
+        open={pickCraque}
+        title="Definir craque na mão"
+        onClose={() => {
+          setPickCraque(false)
+          setCraqueChoice(null)
+        }}
+      >
         <p className="mb-2 text-xs text-muted">Útil para desempatar. Fica registrado como decisão do admin.</p>
         <div className="max-h-80 divide-y divide-line/60 overflow-auto">
           {eligible.map((e) => (
             <button
               key={e.id}
               className="flex w-full items-center gap-2 py-2 text-left"
-              onClick={() => {
-                void mutate((r) => r.setCraque(match.id, e.id))
-                setPickCraque(false)
-              }}
+              onClick={() => setCraqueChoice(e)}
             >
               <Avatar name={e.name} photoUrl={photo(e.id)} size={26} />
               <span className="flex-1 truncate text-sm">{e.name}</span>
@@ -251,6 +319,37 @@ export default function Craque() {
           ))}
         </div>
       </Modal>
+
+      {/* Fica por cima da lista: cancelar volta para a escolha, sem perder o lugar. */}
+      <Confirm
+        open={!!craqueChoice}
+        title="Confirmar o craque?"
+        confirmLabel="Sim, é esse"
+        onClose={() => setCraqueChoice(null)}
+        onConfirm={() => {
+          const chosen = craqueChoice!
+          void mutate((r) => r.setCraque(match.id, chosen.id))
+          setPickCraque(false)
+          setMsg(`${chosen.name} definido como craque do jogo.`)
+        }}
+      >
+        {craqueChoice && (
+          <div className="flex items-center gap-3">
+            <Avatar name={craqueChoice.name} photoUrl={photo(craqueChoice.id)} size={48} />
+            <div className="min-w-0">
+              <div className="truncate font-bold">{craqueChoice.name}</div>
+              <div className="text-xs text-muted">
+                {data.tenant.branding.teamNames[craqueChoice.team]} ·{' '}
+                {match.votes?.[craqueChoice.id] ?? 0} de {total} votos
+              </div>
+            </div>
+          </div>
+        )}
+        <p className="mt-3">
+          Ele vira o craque de <b className="text-ink">{formatDate(match.date)}</b> e a votação é
+          encerrada. Dá para trocar depois em "Definir craque" ou limpar em "Desfazer".
+        </p>
+      </Confirm>
     </Section>
   )
 }

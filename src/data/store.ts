@@ -6,9 +6,20 @@ import { accessMode } from '../domain/plan'
 import type { PlayerStats, Role, TenantData } from '../domain/types'
 import { LocalRepository } from './localRepo'
 import type { Repository } from './repo'
+import { supabaseConfigured } from './supabaseClient'
+import { SupabaseRepository } from './supabaseRepo'
 import seed from '../../seed/demo.json'
 
 const ADMIN_KEY = 'fdg_role'
+
+/**
+ * Escolhe o adapter (ADR-004). Com as variaveis do Supabase preenchidas o app
+ * fala com o Postgres; sem elas roda 100% local, que e o modo de demonstracao e
+ * tambem o modo offline do PWA.
+ */
+function createRepo(): Repository {
+  return supabaseConfigured ? new SupabaseRepository() : new LocalRepository(seed as never)
+}
 
 interface State {
   repo: Repository
@@ -31,7 +42,7 @@ function initialRole(): Role {
 }
 
 export const useStore = create<State>((set, get) => ({
-  repo: new LocalRepository(seed as never),
+  repo: createRepo(),
   data: null,
   loading: true,
   error: null,

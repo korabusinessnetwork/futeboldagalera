@@ -3,8 +3,9 @@ import { useSearchParams } from 'react-router-dom'
 import { useIsAdmin, useStore } from '../../data/store'
 import { swapPlayers } from '../../domain/lineupEdit'
 import { formatDate } from '../../domain/match'
-import type { Lineup } from '../../domain/types'
+import type { Lineup, TenantBranding } from '../../domain/types'
 import LineupView from '../components/LineupView'
+import TeamIdentityEditor from '../components/TeamIdentityEditor'
 import { downloadCanvas, lineupText, renderLineupCanvas, shareCanvas } from '../lineupImage'
 import { Banner, Empty, Section } from '../components/ui'
 
@@ -29,6 +30,9 @@ export default function EscalacaoDia() {
     if (match && params.get('id') !== match.id) setParams({ id: match.id }, { replace: true })
   }, [match?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const saveBranding = (patch: Partial<TenantBranding>) =>
+    void mutate((r) => r.updateBranding(patch))
+
   const photos = useMemo(
     () => Object.fromEntries(data.players.map((p) => [p.id, p.photoUrl])),
     [data.players],
@@ -37,6 +41,7 @@ export default function EscalacaoDia() {
   if (!visible.length) {
     return (
       <Section title="Escalação do dia">
+        {isAdmin && <TeamIdentityEditor branding={data.tenant.branding} onSave={saveBranding} />}
         <Empty icon="🟢">
           Nenhuma escalação liberada ainda. Quando o admin publicar, ela aparece aqui.
         </Empty>
@@ -120,6 +125,8 @@ export default function EscalacaoDia() {
           </button>
         </div>
       )}
+
+      {isAdmin && <TeamIdentityEditor branding={data.tenant.branding} onSave={saveBranding} />}
 
       {isAdmin && (
         <div className="card mb-3 flex items-end gap-2 p-3">

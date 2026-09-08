@@ -1,4 +1,6 @@
 import { useStore } from '../../data/store'
+import { CRAQUE_DURATION_MIN, CRAQUE_OPEN_MIN } from '../../domain/constants'
+import { minuteLabel } from '../../domain/craque'
 import { Section } from '../components/ui'
 
 export default function Regras() {
@@ -46,8 +48,10 @@ export default function Regras() {
         <div>
           <h3 className="mb-1 font-bold text-accent">Craque do jogo</h3>
           <p className="text-muted">
-            Votação aberta das <b className="text-ink">21:30 às 22:30</b> ({branding.timezone}). Durante a
-            votação a parcial fica escondida, o resultado só aparece no encerramento.
+            A votação abre <b className="text-ink">{minuteLabel(CRAQUE_OPEN_MIN)}</b> no dia da partida e
+            dura <b className="text-ink">{CRAQUE_DURATION_MIN} minutos</b> ({branding.timezone}) — depois
+            fecha sozinha. O admin pode abrir antes ou encerrar na hora que quiser. Durante a votação a
+            parcial fica escondida, o resultado só aparece no encerramento.
           </p>
         </div>
 

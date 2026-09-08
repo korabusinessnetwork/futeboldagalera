@@ -35,6 +35,7 @@ export interface LegacyMatch {
   lineup?: unknown
   votes?: Record<string, number>
   voteOpen?: boolean
+  voteOpenedAt?: string | null
   voteClosed?: boolean
   craque?: string | null
 }
@@ -146,6 +147,7 @@ export function importLegacy(dump: LegacyDump, tenantId: string): { players: Pla
       lineup: relinkNames(toLineup(m.lineup), byId),
       votes: m.votes ?? {},
       voteOpen: m.voteOpen,
+      voteOpenedAt: m.voteOpenedAt ?? null,
       voteClosed: m.voteClosed,
       craque: m.craque ?? null,
       season: m.date.slice(0, 4),
@@ -179,6 +181,7 @@ export function exportLegacy(data: TenantData): LegacyDump {
       lineup: m.lineup ?? undefined,
       votes: m.votes,
       voteOpen: m.voteOpen,
+      voteOpenedAt: m.voteOpenedAt,
       voteClosed: m.voteClosed,
       craque: m.craque,
     })),

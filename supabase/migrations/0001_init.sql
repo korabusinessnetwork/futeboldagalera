@@ -114,12 +114,13 @@ create table matches (
   id uuid primary key default gen_random_uuid(),
   tenant_id uuid not null references tenants on delete cascade,
   date date not null,
-  season text generated always as (to_char(date, 'YYYY')) stored,
+  season text generated always as (extract(year from date)::text) stored,
   status text not null default 'draft'            -- draft, pending, finished
     check (status in ('draft','pending','finished')),
   score_a int, score_b int,                       -- a = branco, b = preto
   lineup_published boolean not null default false,
   vote_state text not null default 'auto' check (vote_state in ('auto','open','closed')),
+  vote_opened_at timestamptz,                     -- abertura manual: fecha sozinha 30 min depois
   craque_player_id uuid references players,
   formation_a text, formation_b text,             -- "2-1-2-1"
   draw_seed bigint,                               -- reproduz o sorteio

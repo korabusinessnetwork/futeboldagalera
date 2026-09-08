@@ -72,8 +72,10 @@ nome, os dois viram "Primeiro Segundo". `dispName` gera "Primeiro S.".
 
 ## Craque do jogo
 
-Janela 21:30 → 22:30 no fuso do grupo, no dia da partida
-(`CRAQUE_OPEN_MIN = 1290`, `CRAQUE_CLOSE_MIN = 1350`). Estados: `before`,
-`open`, `closed`, `finalized`. `voteOpen`/`voteClosed` são overrides do admin;
+Abre 21:30 no fuso do grupo, no dia da partida, e **dura 30 minutos** —
+depois fecha sozinha (`CRAQUE_OPEN_MIN = 1290`, `CRAQUE_DURATION_MIN = 30`,
+`CRAQUE_CLOSE_MIN = 1320`). Estados: `before`, `open`, `closed`, `finalized`.
+A abertura manual do admin carimba `voteOpenedAt` e vale os mesmos 30 minutos;
+`voteClosed` encerra antes da hora;
 `craque` definido finaliza acima de tudo. Elegíveis: titulares, goleiros e
 reservas dos dois times. Durante a votação a parcial fica escondida.

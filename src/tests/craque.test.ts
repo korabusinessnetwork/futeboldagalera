@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { craqueState, eligibleForCraque, tallyVotes, zonedNow } from '../domain/craque'
+import { craqueState, eligibleForCraque, msUntilClose, tallyVotes, zonedNow } from '../domain/craque'
 import type { Lineup, Match } from '../domain/types'
 
 const TZ = 'America/Sao_Paulo'
@@ -31,7 +31,7 @@ const match = (over: Partial<Match> = {}): Match => ({
 /** 26/08/2026 as HH:MM em Sao Paulo (UTC-3). */
 const at = (h: number, m = 0) => new Date(Date.UTC(2026, 7, 26, h + 3, m))
 
-describe('janela de votacao 21:30 -> 22:30', () => {
+describe('janela automatica: abre 21:30 e dura 30 min', () => {
   it('antes das 21:30 no dia da partida: before', () => {
     expect(craqueState(match(), at(21, 29), TZ)).toBe('before')
   })
@@ -40,26 +40,60 @@ describe('janela de votacao 21:30 -> 22:30', () => {
     expect(craqueState(match(), at(21, 30), TZ)).toBe('open')
   })
 
-  it('as 22:29: ainda aberta', () => {
-    expect(craqueState(match(), at(22, 29), TZ)).toBe('open')
+  it('as 21:59: ainda aberta', () => {
+    expect(craqueState(match(), at(21, 59), TZ)).toBe('open')
   })
 
-  it('as 22:30: encerrada', () => {
-    expect(craqueState(match(), at(22, 30), TZ)).toBe('closed')
+  it('as 22:00: fecha sozinha, 30 min depois da abertura', () => {
+    expect(craqueState(match(), at(22, 0), TZ)).toBe('closed')
   })
 
   it('dia anterior: before; dia seguinte: closed', () => {
     expect(craqueState(match(), new Date('2026-08-25T23:00:00Z'), TZ)).toBe('before')
     expect(craqueState(match(), new Date('2026-08-27T15:00:00Z'), TZ)).toBe('closed')
   })
+
+  it('msUntilClose conta ate as 22:00', () => {
+    expect(msUntilClose(match(), at(21, 40), TZ)).toBe(20 * 60_000)
+  })
 })
 
-describe('overrides do admin', () => {
-  it('voteOpen abre fora da janela', () => {
-    expect(craqueState(match({ voteOpen: true }), at(10), TZ)).toBe('open')
+describe('abertura manual do admin', () => {
+  const openedAt = (h: number, m = 0) => new Date(Date.UTC(2026, 7, 26, h + 3, m)).toISOString()
+
+  it('abre fora da janela automatica', () => {
+    expect(craqueState(match({ voteOpen: true, voteOpenedAt: openedAt(10) }), at(10, 5), TZ)).toBe('open')
   })
 
-  it('voteClosed encerra dentro da janela', () => {
+  it('continua aberta ate 29 min depois da abertura', () => {
+    const m = match({ voteOpen: true, voteOpenedAt: openedAt(10) })
+    expect(craqueState(m, at(10, 29), TZ)).toBe('open')
+  })
+
+  it('fecha sozinha 30 min depois da abertura', () => {
+    const m = match({ voteOpen: true, voteOpenedAt: openedAt(10) })
+    expect(craqueState(m, at(10, 30), TZ)).toBe('closed')
+    expect(craqueState(m, at(11, 0), TZ)).toBe('closed')
+  })
+
+  it('msUntilClose conta a partir do carimbo da abertura', () => {
+    const m = match({ voteOpen: true, voteOpenedAt: openedAt(10) })
+    expect(msUntilClose(m, at(10, 12), TZ)).toBe(18 * 60_000)
+  })
+
+  it('dado antigo sem carimbo fica aberto ate o admin encerrar', () => {
+    const m = match({ voteOpen: true })
+    expect(craqueState(m, at(10), TZ)).toBe('open')
+    expect(craqueState(m, at(23, 59), TZ)).toBe('open')
+    expect(msUntilClose(m, at(10), TZ)).toBeNull()
+  })
+
+  it('voteClosed encerra na hora, antes dos 30 min', () => {
+    const m = match({ voteOpen: true, voteOpenedAt: openedAt(21, 30), voteClosed: true })
+    expect(craqueState(m, at(21, 45), TZ)).toBe('closed')
+  })
+
+  it('voteClosed encerra dentro da janela automatica', () => {
     expect(craqueState(match({ voteClosed: true }), at(21, 45), TZ)).toBe('closed')
   })
 

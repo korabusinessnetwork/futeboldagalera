@@ -2,6 +2,20 @@
 
 export type Pos = 'GOL' | 'ZAG' | 'VOL' | 'MC' | 'ATA'
 export type LinePos = Exclude<Pos, 'GOL'>
+/**
+ * Codigo de posicao gravado no jogador. Pode ser um dos cinco base ou uma
+ * posicao criada pelo grupo — que sempre aponta para um base, porque formacao,
+ * sorteio e desenho do campo so sabem trabalhar com os cinco.
+ */
+export type PosCode = Pos | (string & {})
+
+/** Posicao criada pelo grupo: rotulo proprio, papel conhecido pelo motor. */
+export interface PositionDef {
+  /** Sigla que o grupo ve, em caixa alta (ex.: ALA, LIB). */
+  code: string
+  /** Papel que o sorteio e a formacao usam no lugar dela. */
+  base: Pos
+}
 export type Result = 'v' | 'e' | 'd'
 export type TeamKey = 'branco' | 'preto'
 export type MatchStatus = 'draft' | 'pending' | 'finished'
@@ -11,7 +25,7 @@ export interface Player {
   id: string
   tenantId: string
   name: string
-  pos: Pos | null
+  pos: PosCode | null
   photoUrl?: string | null
   /** "Goleiro App": pseudo-jogador, ignorado no ranking e na artilharia. */
   app?: boolean
@@ -24,7 +38,7 @@ export interface Player {
 export interface Avulso {
   id: string // prefixo "av-"
   name: string
-  pos: Pos | null
+  pos: PosCode | null
   avulso: true
 }
 
@@ -41,7 +55,7 @@ export interface MatchEntry {
 export interface LineupPlayer {
   id: string
   name: string
-  pos: Pos | null
+  pos: PosCode | null
   rating: number
   avulso: boolean
   /** Slot em que foi escalado (pode divergir de `pos`). */
@@ -83,6 +97,8 @@ export interface Match {
   lineup?: Lineup | null
   votes?: Record<string, number>
   voteOpen?: boolean
+  /** Instante ISO em que a votacao foi aberta. Fecha sozinha 30 min depois. */
+  voteOpenedAt?: string | null
   voteClosed?: boolean
   craque?: string | null
   /** Temporada, para o ranking multi-temporada (melhoria 8.6). */
@@ -92,7 +108,7 @@ export interface Match {
 export interface PlayerStats {
   id: string
   name: string
-  pos: Pos | null
+  pos: PosCode | null
   games: number
   v: number
   e: number
@@ -111,7 +127,7 @@ export interface RankedRow extends PlayerStats {
 export interface ScorerRow {
   id: string
   name: string
-  pos: Pos | null
+  pos: PosCode | null
   goals: number
   games: number
   avg: number
@@ -126,6 +142,10 @@ export interface TenantBranding {
   instagramUrl?: string | null
   timezone: string
   teamNames: Record<TeamKey, string>
+  /** Posicoes criadas pelo grupo, alem das cinco base. */
+  positions?: PositionDef[]
+  /** Cor da camisa de cada time. Ausente = branco e preto do padrao. */
+  teamColors?: Record<TeamKey, string>
 }
 
 export interface Tenant {

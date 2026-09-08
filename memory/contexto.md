@@ -1,6 +1,6 @@
 # Contexto vivo · Futebol da Galera
 
-Última atualização: 2026-09-02
+Última atualização: 2026-09-08
 
 ## O que é
 
@@ -17,10 +17,16 @@ que roda em Azure Static Web Apps com plano vencendo.
 
 ## Estado
 
-Fases 0–3 e 5 entregues. Fase 4 com o domínio de cobrança pronto e testado,
-faltando auth real, adapter Supabase e gateway. Ver `docs/11-roadmap.md`.
+Fases 0–3 e 5 entregues. Fase 4 com o domínio de cobrança pronto e testado e o
+**adapter Supabase entregue** (rodada 1 do loop, `specs/adapter-supabase.md`);
+faltam auth real e gateway. Ver `docs/11-roadmap.md`.
 
-98 testes passando. Build limpo. Fluxo verificado ponta a ponta em navegador.
+126 testes passando. Build limpo. Fluxo verificado ponta a ponta em navegador.
+
+O projeto Supabase `xqqxfmcwamcpyrheofcb` está provisionado com as migrations
+0001–0004 aplicadas. Enquanto a auth não entra, o adapter para em
+`auth_required`: sem sessão a RLS devolve lista vazia, e carregar uma base vazia
+fingindo sucesso seria pior do que falhar.
 
 ## Decisões que não devem ser revisitadas sem motivo novo
 
