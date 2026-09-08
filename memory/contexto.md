@@ -17,16 +17,18 @@ que roda em Azure Static Web Apps com plano vencendo.
 
 ## Estado
 
-Fases 0–3 e 5 entregues. Fase 4 com o domínio de cobrança pronto e testado e o
-**adapter Supabase entregue** (rodada 1 do loop, `specs/adapter-supabase.md`);
-faltam auth real e gateway. Ver `docs/11-roadmap.md`.
+Fases 0–3 e 5 entregues. Fase 4 com o domínio de cobrança pronto e testado, o
+**adapter Supabase** (rodada 1, `specs/adapter-supabase.md`) e a **auth real**
+(rodada 2, `specs/auth-real.md`) entregues; falta o gateway. Ver
+`docs/11-roadmap.md`.
 
-126 testes passando. Build limpo. Fluxo verificado ponta a ponta em navegador.
+134 testes passando. Build limpo.
 
 O projeto Supabase `xqqxfmcwamcpyrheofcb` está provisionado com as migrations
-0001–0004 aplicadas. Enquanto a auth não entra, o adapter para em
-`auth_required`: sem sessão a RLS devolve lista vazia, e carregar uma base vazia
-fingindo sucesso seria pior do que falhar.
+0001–0004 aplicadas. Para abrir o app contra ele é preciso criar a conta dona no
+painel e ligar a primeira `membership` por SQL — o passo a passo está em
+`docs/10-operacao.md`. Sem `membership` a RLS esconde o grupo, e isso é o
+comportamento correto, não um bug.
 
 ## Decisões que não devem ser revisitadas sem motivo novo
 

@@ -8,6 +8,7 @@ import type {
   Player,
   PlanCode,
   Pos,
+  Role,
   Subscription,
   TeamKey,
   Tenant,
@@ -15,6 +16,7 @@ import type {
   TenantData,
   VoteState,
 } from '../domain/types'
+import { roleFromMembership } from './auth'
 import { RepoError, type Repository } from './repo'
 import { getSupabase } from './supabaseClient'
 import {
@@ -46,11 +48,11 @@ import {
  *
  * Duas coisas que este adapter NAO faz, de proposito:
  *
- * - **Autenticar.** A RLS do 0001_init.sql resolve tudo por `is_member()`, que
- *   depende de `auth.uid()`. Sem sessao todo select volta vazio, o que e
- *   indistinguivel de "grupo sem dados" — por isso `load()` recusa cedo e com
- *   erro proprio, em vez de devolver uma base vazia fingindo sucesso. O login
- *   entra no item 1 da Fase 4.
+ * - **Autenticar.** Quem cuida da sessao e `src/data/auth.ts`; aqui so se exige
+ *   que ela exista. A RLS do 0001_init.sql resolve tudo por `is_member()`, que
+ *   depende de `auth.uid()`, e sem sessao todo select volta vazio — o que e
+ *   indistinguivel de "grupo sem dados". Por isso `load()` recusa cedo e com
+ *   erro proprio, em vez de devolver uma base vazia fingindo sucesso.
  * - **Escrever cobranca.** As policies de `subscriptions` e `billing_periods`
  *   sao leitura-apenas: escrita so pelo service role, via webhook do gateway
  *   (item 3 da Fase 4). Tentar um UPDATE daqui a RLS engoliria em silencio, e
@@ -116,7 +118,7 @@ export class SupabaseRepository implements Repository {
   // -------------------------------------------------------------------- load
 
   async load(slug: string): Promise<TenantData> {
-    await this.sessionUserId()
+    const userId = await this.sessionUserId()
     const db = this.db()
 
     const tenantRow = this.take<TenantRow>(
@@ -126,11 +128,12 @@ export class SupabaseRepository implements Repository {
     const tenant = tenantFromRow(tenantRow)
     this.tenantId = tenant.id
 
-    const [playerRows, matchRows, subRow, tallies] = await Promise.all([
+    const [playerRows, matchRows, subRow, tallies, role] = await Promise.all([
       this.fetchPlayers(tenant.id),
       this.fetchMatches(tenant.id),
       this.fetchSubscription(tenant.id),
       this.fetchTallies(tenant.id),
+      this.fetchRole(tenant.id, userId),
     ])
 
     const entries = await this.fetchEntries(matchRows.map((m) => m.id))
@@ -148,7 +151,24 @@ export class SupabaseRepository implements Repository {
         matchFromRow(row, byMatch.get(row.id) ?? [], tallies.get(row.id) ?? {}),
       ),
       subscription: subRow,
+      role,
     }
+  }
+
+  /**
+   * Papel do usuario neste grupo. Vem do banco, nunca do front — a lista de
+   * admin no cliente era o erro 3 do docs/06-seguranca.md. Se a linha nao vier
+   * (a RLS ja teria escondido o tenant antes), fica no menor privilegio.
+   */
+  private async fetchRole(tenantId: string, userId: string): Promise<Role> {
+    const res = await this.db()
+      .from('memberships')
+      .select('role')
+      .eq('tenant_id', tenantId)
+      .eq('user_id', userId)
+      .maybeSingle()
+    if (res.error) this.fail(res.error, 'Falha ao carregar o seu papel no grupo.')
+    return roleFromMembership(res.data?.role)
   }
 
   private async fetchPlayers(tenantId: string): Promise<PlayerRow[]> {

@@ -46,3 +46,30 @@ todas existentes.
 
 **Próxima vez**: adapter novo pede uma conferência das listas de coluna contra o schema real. É
 barato e pega a classe de erro mais cara.
+
+## 2026-09-08 · Magic link e autocadastro custam SMTP, e isso muda o escopo
+
+O roadmap pedia "e-mail/senha **+ magic link**". Magic link, autocadastro e "esqueci a senha"
+dependem de entrega de e-mail; o projeto está com `smtp_host: null` e `mailer_autoconfirm: false`,
+ou seja, no mailer embutido do Supabase, que é best-effort e limitado por hora.
+
+A metade e-mail/senha não precisa de e-mail nenhum e destrava o adapter sozinha. A metade que custa
+ficou fora, com o custo levantado em `specs/auth-real.md` seção 8, para o dono decidir.
+
+**Próxima vez**: ao ler um item de roadmap com "+", checar se as duas metades têm a mesma
+dependência. Aqui uma era grátis e a outra tinha mensalidade — entregar só a grátis destravou o
+mesmo tanto.
+
+## 2026-09-08 · A conta dona não pode nascer sozinha, e inventar isso seria decisão de produto
+
+Um usuário logado sem `membership` não enxerga nada: a RLS esconde o tenant, e ele também não
+consegue inserir a própria `membership` (a policy exige `is_admin`). O bootstrap é obrigatoriamente
+server-side.
+
+Fazer uma RPC `claim_tenant` — "o primeiro que logar vira dono do grupo sem dono" — seria inventar
+regra de produto que não está escrita em lugar nenhum, e ainda por cima de segurança. Ficou como
+passo de operação documentado em `docs/10-operacao.md`: conta criada no painel com Auto Confirm, e
+um SQL que liga a `membership` por e-mail, sem e-mail de cliente cravado em código (white-label).
+
+**Próxima vez**: quando o bootstrap de permissão não tem dono escrito, documentar o passo manual
+custa uma linha e não fecha porta nenhuma. Inventar o fluxo fecha.

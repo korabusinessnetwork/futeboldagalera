@@ -202,4 +202,10 @@ export interface TenantData {
   players: Player[]
   matches: Match[]
   subscription: Subscription
+  /**
+   * Papel do usuario logado neste tenant, vindo de `memberships`. So o adapter
+   * que tem conta preenche: no modo local o papel continua sendo o toggle de
+   * demonstracao. Papel nunca sai do front (erro 3 do docs/06-seguranca.md).
+   */
+  role?: Role
 }

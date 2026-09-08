@@ -4,6 +4,7 @@ import { ratingTable } from '../domain/rating'
 import { computeStats, defaultSeason, seasonsOf } from '../domain/stats'
 import { accessMode } from '../domain/plan'
 import type { PlayerStats, Role, TenantData } from '../domain/types'
+import { authEnabled, currentUser, onAuthChange, signIn, signOut, type AuthUser } from './auth'
 import { LocalRepository } from './localRepo'
 import type { Repository } from './repo'
 import { supabaseConfigured } from './supabaseClient'
@@ -28,6 +29,13 @@ interface State {
   error: string | null
   role: Role
   season: string | null
+  /** null = sem sessao. So faz sentido no modo Supabase. */
+  user: AuthUser | null
+  /** false ate a sessao guardada ser resolvida: evita piscar a tela de login. */
+  authReady: boolean
+  initAuth: () => Promise<void>
+  signIn: (email: string, password: string) => Promise<void>
+  signOut: () => Promise<void>
   load: (slug: string) => Promise<void>
   refresh: () => Promise<void>
   setRole: (role: Role) => void
@@ -36,7 +44,13 @@ interface State {
   mutate: <T>(fn: (repo: Repository) => Promise<T>) => Promise<T>
 }
 
+/** Trava de assinatura unica do onAuthChange. Ver initAuth. */
+let authIniciada = false
+
 function initialRole(): Role {
+  // No modo Supabase o papel so pode vir do banco. Um `fdg_role: admin` que
+  // sobrou de quando o app rodava local nao pode valer como privilegio aqui.
+  if (authEnabled) return 'viewer'
   if (typeof localStorage === 'undefined') return 'viewer'
   return (localStorage.getItem(ADMIN_KEY) as Role) ?? 'viewer'
 }
@@ -48,12 +62,44 @@ export const useStore = create<State>((set, get) => ({
   error: null,
   role: initialRole(),
   season: null,
+  user: null,
+  authReady: !authEnabled,
+
+  /**
+   * Resolve a sessao guardada e passa a ouvir as mudancas. A sessao pode cair
+   * sozinha (token expirado, logout em outra aba); quando cai, o grupo sai da
+   * tela junto, senao sobra dado de um usuario que ja nao esta logado.
+   */
+  async initAuth() {
+    if (!authEnabled || authIniciada) return
+    // O StrictMode roda o efeito duas vezes em dev: sem esta trava, seriam dois
+    // assinantes de onAuthChange e cada mudanca de sessao chegaria em dobro.
+    authIniciada = true
+    set({ user: await currentUser(), authReady: true })
+    onAuthChange((user) => {
+      if (user) set({ user })
+      else set({ user: null, data: null, error: null, role: 'viewer' })
+    })
+  },
+
+  async signIn(email, password) {
+    const user = await signIn(email, password)
+    set({ user })
+  },
+
+  async signOut() {
+    await signOut()
+    // O papel volta ao menor privilegio: o proximo login pode ser de outra
+    // pessoa, e papel de admin nao pode sobreviver a troca de conta.
+    set({ user: null, data: null, error: null, role: 'viewer' })
+  },
 
   async load(slug) {
     set({ loading: true, error: null })
     try {
       const data = await get().repo.load(slug)
-      set({ data, loading: false })
+      // Com conta, o papel vem de `memberships`; sem conta, vale o toggle local.
+      set({ data, loading: false, role: data.role ?? get().role })
     } catch (e) {
       set({ error: (e as Error).message, loading: false })
     }
@@ -66,6 +112,8 @@ export const useStore = create<State>((set, get) => ({
   },
 
   setRole(role) {
+    // Toggle de demonstracao do modo local. No modo Supabase o papel e do banco.
+    if (authEnabled) return
     if (typeof localStorage !== 'undefined') localStorage.setItem(ADMIN_KEY, role)
     set({ role })
   },

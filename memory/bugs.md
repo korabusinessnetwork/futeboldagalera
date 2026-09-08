@@ -35,3 +35,29 @@ nunca bate com o id da conta, então todo insert voltaria erro de RLS.
 vínculo por conta é mais forte que por aparelho, e é o que a policy escrita já pedia.
 **Próxima vez**: ao ligar um adapter novo numa porta existente, conferir cada policy contra o
 **valor que a UI realmente passa** — a assinatura do método bater não garante que o dado serve.
+
+## 2026-09-08 · Papel de admin sobrevivia à troca de conta e à troca de modo
+
+Duas falhas do mesmo tipo, achadas na review da rodada 2, antes de rodar em navegador:
+
+1. `initialRole()` lia `localStorage.fdg_role` sempre. Quem tivesse clicado no toggle de admin
+   enquanto o app rodava local e depois ligasse o Supabase começava a sessão com `role: 'admin'`
+   vindo do front — exatamente o erro 3 do `docs/06-seguranca.md`, por outra porta.
+2. `signOut()` limpava `user` e `data` mas deixava `role` como estava. O próximo login numa conta
+   `viewer` herdava o `owner` do login anterior até o `load()` terminar.
+
+**Correção**: `initialRole()` devolve `viewer` quando `authEnabled`; `signOut()` e a queda de sessão
+resetam `role` para `viewer`.
+**Próxima vez**: papel é dado de sessão, não de aplicação. Toda saída de conta tem que zerar tudo
+que veio da conta — e estado que mora em `localStorage` precisa de uma regra explícita para quando o
+modo do app muda debaixo dele.
+
+## 2026-09-08 · `onAuthChange` assinava duas vezes por causa do StrictMode
+
+`main.tsx` roda em `<StrictMode>`, que invoca cada efeito duas vezes em desenvolvimento. O
+`useEffect` que chama `initAuth()` criava dois assinantes de `onAuthStateChange`, e cada mudança de
+sessão chegava em dobro no store.
+
+**Correção**: trava de módulo `authIniciada` em `src/data/store.ts`.
+**Próxima vez**: efeito que assina algo global precisa ou de cleanup de verdade, ou de trava de
+idempotência. Em StrictMode o sintoma aparece em dev; sem ele, só em produção e mais tarde.

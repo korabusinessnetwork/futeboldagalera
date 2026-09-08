@@ -11,10 +11,12 @@
 
 ## O que falta para a Fase 4 fechar
 
-1. **Auth real**: e-mail/senha + magic link no Supabase, `memberships` de
-   verdade no lugar do toggle local.
-2. **Adapter Supabase**: implementar a porta `Repository` contra o Postgres. O
-   domínio e a UI não mudam.
+1. ✅ **Auth real**: login por e-mail/senha, sessão persistida e `memberships`
+   no lugar do toggle local (`specs/auth-real.md`). Magic link e autocadastro
+   ficaram de fora: dependem de SMTP contratado, custo levantado na seção 8
+   daquele spec. Contas nascem no painel — ver `docs/10-operacao.md`.
+2. ✅ **Adapter Supabase**: a porta `Repository` contra o Postgres
+   (`specs/adapter-supabase.md`). O domínio e a UI não mudaram.
 3. **Gateway**: SetupIntent no cadastro (cartão sem cobrar), assinatura para a
    recorrência, cobrança avulsa para os blocos de 30 dias, webhook atualizando
    `subscriptions` e gravando `billing_periods`.
