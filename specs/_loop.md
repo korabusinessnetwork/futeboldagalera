@@ -18,9 +18,12 @@
 - Commit: `1860467` na branch `claude/adapter-supabase`
 - Pendente de decisão: nenhuma. Para abrir o app contra o Supabase, seguir `docs/10-operacao.md`
   (criar conta com Auto Confirm + SQL da primeira `membership`).
-- Próximo item recomendado: **gateway de pagamento (Fase 4, item 3)** — é o único item que ainda
-  bloqueia o produto de ser vendido, e sem ele os cinco métodos de cobrança do adapter seguem
-  recusando com `not_supported`.
+- Próximo item recomendado: **migrar o dump do portal antigo para o Supabase** — `memory/contexto.md`
+  registra que o Azure do PMNH está com "plano vencendo", e o schema que faltava para receber a
+  carga acabou de existir; é o único item da lista com prazo fora do nosso controle.
+- Não recomendado automaticamente: **gateway de pagamento (Fase 4, item 3)**. Bloqueia a venda, mas
+  envolve custo financeiro (taxa por transação do Stripe, ADR-003), e por regra do `/proximo` esse
+  tipo de item é decisão do dono, não recomendação da máquina.
 
 ## Rodada 1 — Adapter Supabase — 2026-09-08
 
