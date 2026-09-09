@@ -1,5 +1,27 @@
 # Ledger do loop
 
+## Rodada 4 — Onboarding de tenant em 3 passos — 2026-09-08
+
+- Spec: `specs/onboarding-tenant.md`
+- Resultado da review: **aprovado sem ressalvas** — 15/15 critérios, `npm test` verde (178 testes),
+  `npm run build` limpo
+- Construído: RPC `create_tenant` (`0005_onboarding.sql`), `src/domain/slug.ts` (puro, testado),
+  `src/data/onboarding.ts`, assistente em `src/ui/Onboarding.tsx`, rota `/novo`, entrada no login
+- Ensaio contra o banco: os cinco caminhos de recusa devolveram os SQLSTATE certos, e o caminho
+  feliz criou tenant + assinatura `free` + membership `owner` na mesma transação; tenant apagado no
+  fim
+- Corrigido pela review: `React.ReactNode` trocado pela convenção do projeto
+- Aprendido: `memory/learnings.md` (2), `memory/patterns.md` (1 padrão de bootstrap de permissão)
+- Commit: `PENDENTE` na branch `claude/adapter-supabase`
+- **Atenção**: há trabalho paralelo não-commitado nesta árvore (`src/App.tsx`, `src/ui/SemGrupo.tsx`,
+  `src/ui/components/LineupView.tsx`, `src/ui/tabs/Regras.tsx`, `supabase/demo-*.sql`,
+  `src/tests/demoSeed.test.ts`). Esta rodada foi desenhada para não tocar em nenhum deles.
+- Pendente de decisão: a carga de produção do portal antigo **segue parada** (falta o `dump.json` ou
+  a URL do Azure) — é o único item com prazo externo. Falta também ligar o assistente à tela
+  `SemGrupo`, que é uma linha em arquivo de outra linha de trabalho.
+- Próximo item recomendado: **melhoria 3, confirmação de presença pelos atletas** — é o que tira o
+  organizador de digitar a lista toda semana, e não depende de e-mail nem de custo.
+
 ## Rodada 3 — Migração do portal antigo — 2026-09-08
 
 - Spec: `specs/migracao-legado.md`

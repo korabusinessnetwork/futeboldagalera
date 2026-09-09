@@ -20,8 +20,10 @@
 3. **Gateway**: SetupIntent no cadastro (cartão sem cobrar), assinatura para a
    recorrência, cobrança avulsa para os blocos de 30 dias, webhook atualizando
    `subscriptions` e gravando `billing_periods`.
-4. **Onboarding em 3 passos**: nome do grupo + escudo → colar lista de jogadores
-   → primeiro sorteio. Alvo: primeiro valor em menos de 3 minutos.
+4. ✅ **Onboarding em 3 passos** (`specs/onboarding-tenant.md`): nome do grupo →
+   colar lista de jogadores → primeiro sorteio, em `/novo`. O grupo e a primeira
+   `membership` nascem pela RPC `create_tenant`. O **escudo** ficou de fora:
+   depende do Storage por tenant, que ainda não existe.
 
 ## Melhorias da seção 8 da spec
 
@@ -36,4 +38,4 @@
 | 7 | Mensalidade do grupo | ⬜ upsell natural do plano Liga |
 | 8 | Web Push na liberação da escalação e na abertura da votação | ⬜ |
 | 9 | Card de imagem no servidor | ⬜ canvas client-side por enquanto |
-| 10 | Onboarding em 3 passos | ⬜ |
+| 10 | Onboarding em 3 passos | ✅ sem o escudo, que espera o Storage |

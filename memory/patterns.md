@@ -42,3 +42,24 @@ PostgREST não é sucesso.
 
 Toda escrita do adapter leva `.eq('tenant_id', this.tid())` mesmo com a RLS ativa. A RLS é a rede de
 segurança, não o filtro — ADR-002.
+
+## Bootstrap de permissão sai de função `security definer`, nunca do cliente
+
+`tenants` não tem policy de `insert`, e a de `memberships` exige `is_admin(tenant_id)` — que lê
+`memberships`. Quem ainda não está dentro nunca entra: o círculo só quebra no servidor.
+
+`create_tenant` (`0005_onboarding.sql`) é o padrão para isso:
+
+- valida **de novo** o que o front já validou (formato do slug, cor, nome) — validação no cliente é
+  conveniência, não garantia;
+- recusa `auth.uid()` nulo antes de qualquer escrita;
+- cria grupo + assinatura + `membership` de dono na **mesma transação**, porque grupo sem dono é um
+  tenant que ninguém consegue abrir nem apagar;
+- nasce no plano `free` sem cartão: conceder plano ali seria auto-concessão, que é justamente o que
+  a RLS de `subscriptions` existe para impedir;
+- tem teto por dono, para não virar vetor de abuso quando o autocadastro existir;
+- levanta códigos curtos (`slug_em_uso`, `slug_invalido`, ...) que o front traduz, em vez de deixar
+  vazar mensagem de banco para a tela.
+
+Vale para qualquer operação futura que precise furar a própria RLS: convite de membro, transferência
+de propriedade, exclusão de grupo.

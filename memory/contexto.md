@@ -19,14 +19,16 @@ que roda em Azure Static Web Apps com plano vencendo.
 
 Fases 0–3 e 5 entregues. Fase 4 com o domínio de cobrança pronto e testado, o
 **adapter Supabase** (rodada 1, `specs/adapter-supabase.md`) e a **auth real**
-(rodada 2, `specs/auth-real.md`) entregues; falta o gateway. Ver
+(rodada 2, `specs/auth-real.md`) e o **onboarding de grupo** (rodada 4,
+`specs/onboarding-tenant.md`) entregues; falta o gateway. Ver
 `docs/11-roadmap.md`.
 
-154 testes passando. Build limpo.
+178 testes passando. Build limpo.
 
 O projeto Supabase `xqqxfmcwamcpyrheofcb` está provisionado com as migrations
 0001–0004 aplicadas. Para abrir o app contra ele é preciso criar a conta dona no
-painel e ligar a primeira `membership` por SQL — o passo a passo está em
+painel; a partir daí o próprio app cria grupo e `membership` em `/novo`. Para
+vincular uma conta a um grupo **que já existe**, o SQL segue em
 `docs/10-operacao.md`. Sem `membership` a RLS esconde o grupo, e isso é o
 comportamento correto, não um bug.
 

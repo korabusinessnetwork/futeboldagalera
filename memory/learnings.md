@@ -87,3 +87,32 @@ manifesta na segunda execução.
 
 **Próxima vez**: script de carga se valida executando contra o banco real num tenant descartável,
 não lendo a saída. Multi-tenancy torna isso barato: o descarte é um `delete` por `slug`.
+
+## 2026-09-08 · Subselect no mesmo SELECT não enxerga o que a função acabou de inserir
+
+Ao validar a `create_tenant` contra o banco, isto voltou `slug_criado: "ensaio-rpc"` e **zero** em
+todas as contagens:
+
+```sql
+select create_tenant('Pelada da Quarta','ensaio-rpc') as slug_criado,
+       (select count(*) from tenants where slug='ensaio-rpc') as tenants;
+```
+
+Não era bug da função: os subselects rodam no mesmo snapshot do statement, anterior aos inserts que
+a função fez dentro dele. Conferindo num statement separado, as três linhas estavam lá — tenant,
+assinatura `free`/`trial`/sem cartão, e membership `owner`.
+
+**Próxima vez**: para validar função que escreve, o `select` de conferência é **outro statement**.
+Ler zero no mesmo statement é o esperado, não prova de que nada foi gravado — e teria feito eu
+"consertar" uma função que estava certa.
+
+## 2026-09-08 · O onboarding esbarra no limite do plano no meio da lista colada
+
+Grupo novo nasce no plano `free`, que permite 12 jogadores (`plans` no `0001_init.sql`). Colar uma
+lista de 20 nomes cria 12 e falha no 13º com `PlanLimitError`. O assistente precisa cadastrar o que
+couber, dizer **quem ficou de fora** e mostrar o caminho de upgrade — parar no meio sem explicar
+seria pior do que não cadastrar nada.
+
+`SupabaseRepository.createPlayer` chama `assertCanAddPlayer` fora de try/catch, então o
+`PlanLimitError` chega inteiro na tela, com `limit` e `current`. Isso é de propósito: erro de
+negócio não pode virar `db_error` genérico no meio do caminho.

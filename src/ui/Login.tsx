@@ -85,6 +85,13 @@ export default function Login() {
         <button className="btn btn-primary mt-5 w-full" type="submit" disabled={enviando}>
           {enviando ? 'Entrando…' : 'Entrar'}
         </button>
+
+        <p className="mt-4 text-center text-[11px] text-muted">
+          Vai começar uma pelada nova?{' '}
+          <a className="text-accent underline" href="#/novo">
+            Criar um grupo
+          </a>
+        </p>
       </form>
     </div>
   )
