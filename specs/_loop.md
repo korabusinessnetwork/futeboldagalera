@@ -12,7 +12,7 @@
   fim
 - Corrigido pela review: `React.ReactNode` trocado pela convenção do projeto
 - Aprendido: `memory/learnings.md` (2), `memory/patterns.md` (1 padrão de bootstrap de permissão)
-- Commit: `PENDENTE` na branch `claude/adapter-supabase`
+- Commit: `b05ef5e` na branch `claude/adapter-supabase`
 - **Atenção**: há trabalho paralelo não-commitado nesta árvore (`src/App.tsx`, `src/ui/SemGrupo.tsx`,
   `src/ui/components/LineupView.tsx`, `src/ui/tabs/Regras.tsx`, `supabase/demo-*.sql`,
   `src/tests/demoSeed.test.ts`). Esta rodada foi desenhada para não tocar em nenhum deles.
